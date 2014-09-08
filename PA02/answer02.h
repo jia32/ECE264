@@ -60,17 +60,17 @@ char * my_strchr(const char * str, int ch);
   int len = my_strlen(str);
   int ind;
   int count;
-  const char * str1;
-  for (ind = 0; ind < len; ind++) {
+  const char str1;
+  for (ind = 0; ind<len; ind++) {
     if (str[ind] == ch) {
       count = ind;
+      ind = len;
     }
   }
   for (ind = 0; ind < len - count; ind++) {
     str1[ind] = str[count];
   }
-  str1[count] = "\0";
-  return str1;
+  return str1;     
 }
 /** 
  * Same as my_strchr(...), except it searches from the right-hand-side 
@@ -83,7 +83,23 @@ char * my_strchr(const char * str, int ch);
  * printf("'%s'\n", my_strrchr(str, '\0')); // prints "''\n" *
  */
 char * my_strrchr(const char * str, int ch);
-
+{
+  int len = my_strlen(str);
+  int ind;
+  int count;
+  const char *str1;
+  for (ind = len; ind > 0; ind--) {
+    if (str[ind] == char) {
+      count = ind;
+      ind = 0;
+    }
+  }
+  for (ind = 0, ind < len - count; ind++) {
+    str1[ind] = str[count];
+  }
+  str1[count] = "\0";
+  return str1;
+}
 /** Finds the first occurrence of C-string 'needle' in C-string 'haystack'
  * Return 'haystack' when 'needle' is the empty string (ie, "").
  * The terminating null bytes are not compared.
@@ -96,7 +112,19 @@ char * my_strrchr(const char * str, int ch);
  *                                      // i.e., my_strstr(str, "hello") == NULL
  */
 char * my_strstr(const char * haystack, const char * needle);
-
+{
+  int len1 = my_strlen(haystack);
+  int len2 = needle;
+  int ind;
+  int count = my_counterchar(haystack, needle(0));
+  if (count == 0) {
+    return haystack;
+  } else {
+    for (ind = count, ind < len, ++ind) {
+      if (haystack[ind] != needle[ind]) {
+        ind = len;
+        return haystack;
+      }else if ( 
 /**
  * Copies C-string 'src' (including the null-byte terminator) into the memory 
  * pointed to by 'dest'. 
