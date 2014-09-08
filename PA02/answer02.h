@@ -13,7 +13,13 @@
  *                  // consider this case. See the README -- FAQ for more info.
  */
 size_t my_strlen(const char * str);
-
+{
+  int len = 0;
+  while (str[len] != "\0") {
+    len++;
+  }
+  return len;
+}
 /**
  * Count the number of occurrences of character 'ch' in C string 'str'
  *
@@ -21,7 +27,17 @@ size_t my_strlen(const char * str);
  * my_countchar("foo", 'o'); // 2
  */
 int my_countchar(const char * str, char ch);
-
+{
+  int len = size_t(str);
+  int ind;
+  int count = 0;
+  for (ind = 0, ind < len, ind++){
+    if (str[ind] == ch) {
+      count++;    
+    }
+  }
+  return count;
+}
 /**
  * Return a pointer to the first occurrence of character 'ch' in C string 'str'
  * Return NULL if 'ch' is not found.
@@ -40,7 +56,9 @@ int my_countchar(const char * str, char ch);
  * Please read the README FAQ before attempting this function.
  */
 char * my_strchr(const char * str, int ch);
-
+{
+  
+}
 /** 
  * Same as my_strchr(...), except it searches from the right-hand-side 
  *
