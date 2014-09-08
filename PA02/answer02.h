@@ -28,10 +28,10 @@ size_t my_strlen(const char * str);
  */
 int my_countchar(const char * str, char ch);
 {
-  int len = size_t(str);
+  int len = my_strlen(str);
   int ind;
   int count = 0;
-  for (ind = 0, ind < len, ind++){
+  for (ind = 0; ind < len; ind++){
     if (str[ind] == ch) {
       count++;    
     }
@@ -57,7 +57,20 @@ int my_countchar(const char * str, char ch);
  */
 char * my_strchr(const char * str, int ch);
 {
-  
+  int len = my_strlen(str);
+  int ind;
+  int count;
+  const char * str1;
+  for (ind = 0; ind < len; ind++) {
+    if (str[ind] == ch) {
+      count = ind;
+    }
+  }
+  for (ind = 0; ind < len - count; ind++) {
+    str1[ind] = str[count];
+  }
+  str1[count] = "\0";
+  return str1;
 }
 /** 
  * Same as my_strchr(...), except it searches from the right-hand-side 
