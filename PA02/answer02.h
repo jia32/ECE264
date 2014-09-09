@@ -15,8 +15,9 @@
 size_t my_strlen(const char * str);
 {
   int len = 0;
-  while (str[len] != "\0") {
+  while ((* str) != '\0') {
     len++;
+    str ++;
   }
   return len;
 }
@@ -31,7 +32,7 @@ int my_countchar(const char * str, char ch);
   int len = my_strlen(str);
   int ind;
   int count = 0;
-  for (ind = 0; ind < len; ind++){
+  for (ind = 0; ind < len; ++ind){
     if (str[ind] == ch) {
       count++;    
     }
@@ -61,13 +62,13 @@ char * my_strchr(const char * str, int ch);
   int ind;
   int count;
   const char str1;
-  for (ind = 0; ind<len; ind++) {
+  for (ind = 0; ind<len; ++ind) {
     if (str[ind] == ch) {
       count = ind;
       ind = len;
     }
   }
-  for (ind = 0; ind < len - count; ind++) {
+  for (ind = 0; ind < len - count; ++ind) {
     str1[ind] = str[count];
   }
   return str1;     
@@ -113,18 +114,30 @@ char * my_strrchr(const char * str, int ch);
  */
 char * my_strstr(const char * haystack, const char * needle);
 {
-  int len1 = my_strlen(haystack);
-  int len2 = needle;
+  int len = my_strlen(haystack);
   int ind;
-  int count = my_counterchar(haystack, needle(0));
-  if (count == 0) {
+  int count = 0;
+  const char str1;
+  const char str2 = needle;
+  if (*str == 0){
     return haystack;
-  } else {
-    for (ind = count, ind < len, ++ind) {
-      if (haystack[ind] != needle[ind]) {
-        ind = len;
-        return haystack;
-      }else if ( 
+  }
+  for (; *haystack != 0; haystack++){
+    if (*haystack == *str2) {
+      break;
+    }
+    str1 = haystack;
+    while ( *str != '\0') {
+    if (*str == 0) {
+      return haystack;
+    }
+    if ( *str1++ != *str2++) {
+      break;
+    }
+    str2 = needle;
+  }
+  return (char) 0;
+}
 /**
  * Copies C-string 'src' (including the null-byte terminator) into the memory 
  * pointed to by 'dest'. 
@@ -141,7 +154,14 @@ char * my_strstr(const char * haystack, const char * needle);
  * printf("%s\n", my_strcpy(buffer, str)); // prints "Hello World!\n"
  */
 char * my_strcpy(char * dest, const char * src);
-
+{
+  int ind;
+  for (ind = 0; src[ind] != '\0'; ++ind) {
+    dest[ind] = src[ind];
+  }
+  dest[ind] = '\0';
+  return dest;
+}
 /**
  * Append C-string 'src' to C-string 'dest'. A precondition is 'dest' must be 
  * large enough to contain both 'dest' and 'src', *including* the terminating
@@ -155,7 +175,16 @@ char * my_strcpy(char * dest, const char * src);
  * printf("%s\n", my_strcat(buffer, "Zippy!")); // prints "Hello Zippy!"
  */
 char * my_strcat(char * dest, const char * src);
-
+{
+  while (*dest != '\0') {
+    *dest++;
+  }
+  do
+  {
+    *dest++ = *src++;
+  }
+  while (*src != '\0');
+}
 /**
  * Returns 1 when 'ch' is a whitespace character, and 0 otherwise.
  *
@@ -176,7 +205,14 @@ char * my_strcat(char * dest, const char * src);
  *    my_isspace(ch); // always 0
  */
 int my_isspace(int ch);
+{
 
+
+
+  return;
+}
+
+  
 /**
  * Converts (only) the initial portion of 'str' to an integer.
  *
