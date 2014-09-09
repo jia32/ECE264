@@ -8,8 +8,8 @@
 
 int main(int argc, char * * argv)
 {
-    printf("This is  PA02.\n"
-	   "\n");
+    printf("This is  PA02.\n")
+
 	   
     const char * s1 = "Hello World!";
     const char * s2 = "";
@@ -47,11 +47,14 @@ int main(int argc, char * * argv)
 
     // -- my_strcat. You will have to do this yourself... just
     // look at my_strcpy for an example, and go from there.
-
+    char buffer[50];
+    my_strcpy(buffer,"Hello ");
+    printf("%s\n", my_strcat(buffer,"Zipper!"));
     // -- my_isspace. You will have to do this for yourself.
-
+    printf(my_issapce(' ');
+  
     // -- my_atoi. You will have to do this for yourself.
-
+    printf(my_atoi("0");
     return EXIT_SUCCESS;
 }
 
