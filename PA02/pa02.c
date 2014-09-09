@@ -8,18 +8,9 @@
 
 int main(int argc, char * * argv)
 {
-    printf("Welcome to PA02.\n"
-	   "\n"
-	   "You are encouraged to edit this file in order to test\n"
-	   "the behavior of the functions you write in answer02.c\n"
-	   "\n"
-	   "This file will not be marked, and should not be\n"
-	   "submitted.\n"
-	   "\n"
-	   "Don't forget to post questions on blackboard, and ask\n"
-	   "the TAs and your classmates for help.\n"
+    printf("This is  PA02.\n"
 	   "\n");
-
+	   
     const char * s1 = "Hello World!";
     const char * s2 = "";
     const char * s3 = "foo";
