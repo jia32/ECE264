@@ -12,7 +12,7 @@
  * my_strlen(NULL); // error -- undefined behavior. You do not need to 
  *                  // consider this case. See the README -- FAQ for more info.
  */
-size_t my_strlen(const char * str);
+size_t my_strlen(const char * str)
 {
   int len = 0;
   while ((* str) != '\0') {
@@ -27,7 +27,7 @@ size_t my_strlen(const char * str);
  * Examples: 
  * my_countchar("foo", 'o'); // 2
  */
-int my_countchar(const char * str, char ch);
+int my_countchar(const char * str, char ch)
 {
   int len = my_strlen(str);
   int ind;
@@ -57,7 +57,7 @@ int my_countchar(const char * str, char ch);
  * Please read the README FAQ before attempting this function.
  */
 
-char * my_strchr(const char * str, int ch);
+char * my_strchr(const char * str, int ch)
 {
   int len = my_strlen(str);
   int ind;
@@ -82,8 +82,8 @@ char * my_strchr(const char * str, int ch);
  *                                         // i.e., my_strrchr(str, 'z') == NULL
  * printf("'%s'\n", my_strrchr(str, '\0')); // prints "''\n" *
  */
-char * my_strrchr(const char * str, int ch);
- {
+char * my_strrchr(const char * str, int ch)
+{
    int len = my_strlen(str);
    int ind;
 
@@ -109,7 +109,7 @@ char * my_strrchr(const char * str, int ch);
  * printf("'%s'\n", my_strstr(str, "hello")); // prints "'(null)'\n"
  *                                      // i.e., my_strstr(str, "hello") == NULL
  */
-char * my_strstr(const char * haystack, const char * needle);
+char * my_strstr(const char * haystack, const char * needle)
 {
   int len = my_strlen(haystack);
   int ind;
@@ -146,7 +146,7 @@ char * my_strstr(const char * haystack, const char * needle);
  * char buffer[50];
  * printf("%s\n", my_strcpy(buffer, str)); // prints "Hello World!\n"
  */
-char * my_strcpy(char * dest, const char * src);
+char * my_strcpy(char * dest, const char * src)
 {
   int ind;
   for (ind = 0; ind < my_strlen(src);ind++)
@@ -167,7 +167,7 @@ char * my_strcpy(char * dest, const char * src);
  * my_strcpy(buffer, "Hello ");
  * printf("%s\n", my_strcat(buffer, "Zippy!")); // prints "Hello Zippy!"
  */
-char * my_strcat(char * dest, const char * src);
+ char * my_strcat(char * dest, const char * src)
  {
    int i;
    ind j;
