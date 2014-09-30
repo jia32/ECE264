@@ -114,26 +114,22 @@ char * my_strstr(const char * haystack, const char * needle);
   int len = my_strlen(haystack);
   int ind;
   int count = 0;
-  const char str1;
-  const char str2 = needle;
-  if (*str == 0){
-    return haystack;
-  }
-  for (; *haystack != 0; haystack++){
-    if (*haystack == *str2) {
-      break;
-    }
-    str1 = haystack;
-    while ( *str != '\0') {
-    if (*str == 0) {
+  if (needle == NULL)
+    {
       return haystack;
     }
-    if ( *str1++ != *str2++) {
-      break;
+
+  while (haystack != '\0')
+    {
+      const char *h;
+      cont char *n;
+      for (h = haystack, n = needle; *h == *n; ++h, ++n) {
+      }
+      if (*n == '\0') {
+      return haystack;
+      }
+      *haystack++;
     }
-    str2 = needle;
-  }
-  return (char) 0;
 }
 /**
  * Copies C-string 'src' (including the null-byte terminator) into the memory 
@@ -153,10 +149,10 @@ char * my_strstr(const char * haystack, const char * needle);
 char * my_strcpy(char * dest, const char * src);
 {
   int ind;
-  for (ind = 0; src[ind] != '\0'; ++ind) {
-    dest[ind] = src[ind];
-  }
-  dest[ind] = '\0';
+  for (ind = 0; ind < my_strlen(src);ind++)
+    {
+      dest[ind] = src[i];
+    }
   return dest;
 }
 /**
@@ -172,16 +168,19 @@ char * my_strcpy(char * dest, const char * src);
  * printf("%s\n", my_strcat(buffer, "Zippy!")); // prints "Hello Zippy!"
  */
 char * my_strcat(char * dest, const char * src);
-{
-  while (*dest != '\0') {
-    *dest++;
-  }
-  do
-  {
-    *dest++ = *src++;
-  }
-  while (*src != '\0');
-}
+ {
+   int i;
+   ind j;
+   for (i = 0; dest[i] != '\0';i++)
+     {
+       for (j = 0; src[j]!='\0'; j++)
+	 {
+	   dest[i+j] = '\0';
+	 }
+     }
+   dest[i+j] = '\0';
+   return dest;
+ }
 /**
  * Returns 1 when 'ch' is a whitespace character, and 0 otherwise.
  *
