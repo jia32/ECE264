@@ -200,12 +200,13 @@ char * my_strcat(char * dest, const char * src);
  * for(ch = 'A'; ch <= 'Z'; ++ch)
  *    my_isspace(ch); // always 0
  */
-int my_isspace(int ch);
+int my_isspace(int ch)
 {
-
-
-
-  return;
+  if (ch == '\t' || ch == ' '|| ch == '\f'|| ch == '\n'|| ch == '\r'|| ch == '\v'||)
+    {
+      return 1;
+    }
+  else return 0;
 }
 
   
@@ -232,6 +233,32 @@ int my_isspace(int ch);
  * my_atoi("\n\f\t\v\r 6 white space characters handled correctly."); // 6
  * my_atoi("garbage, instead of a number like 73 for example, should yield a zero"); // 0
  */
-int my_atoi(const char * str);
-
+int my_atoi(const char * str)
+{
+  int ret = 0;
+  int neg = 0;
+  while (str)
+    {
+      if (my_issapce(*str) == 1)
+	{
+	  str++;
+	}
+      if (str == '-')
+	{
+	  neg = 1;
+	}
+      while (*str <= '9') && (*str >= '0')
+        {
+         ret *= 10;
+         n += *str - '0';
+        }
+      str++;
+    }  
+  if (neg == 1)
+    {
+      return -n;
+    }
+  else{
+    return n;}
+}
 #endif
