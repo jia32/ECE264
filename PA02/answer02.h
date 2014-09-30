@@ -32,7 +32,7 @@ int my_countchar(const char * str, char ch);
   int len = my_strlen(str);
   int ind;
   int count = 0;
-  for (ind = 0; ind < len; ++ind){
+  for (ind = 0; ind < len; ind++){
     if (str[ind] == ch) {
       count++;    
     }
@@ -56,22 +56,21 @@ int my_countchar(const char * str, char ch);
  *
  * Please read the README FAQ before attempting this function.
  */
+
 char * my_strchr(const char * str, int ch);
 {
   int len = my_strlen(str);
   int ind;
-  int count;
-  const char str1;
-  for (ind = 0; ind<len; ++ind) {
-    if (str[ind] == ch) {
-      count = ind;
-      ind = len;
+
+  if (ch == NULL)
+    {
+      return NULL; 
     }
-  }
-  for (ind = 0; ind < len - count; ++ind) {
-    str1[ind] = str[count];
-  }
-  return str1;     
+
+  for (ind = 0; ind < len; ind++) {
+    if (str[ind] == (char) ch) {
+      return (const char*) &str[ind];
+    }   
 }
 /** 
  * Same as my_strchr(...), except it searches from the right-hand-side 
@@ -84,23 +83,21 @@ char * my_strchr(const char * str, int ch);
  * printf("'%s'\n", my_strrchr(str, '\0')); // prints "''\n" *
  */
 char * my_strrchr(const char * str, int ch);
-{
-  int len = my_strlen(str);
-  int ind;
-  int count;
-  const char *str1;
-  for (ind = len; ind > 0; ind--) {
-    if (str[ind] == char) {
-      count = ind;
-      ind = 0;
-    }
-  }
-  for (ind = 0, ind < len - count; ind++) {
-    str1[ind] = str[count];
-  }
-  str1[count] = "\0";
-  return str1;
-}
+ {
+   int len = my_strlen(str);
+   int ind;
+
+   if (ch == NULL)
+     {
+       return NULL;
+     }
+
+   for (ind = len; ind > 0; ind--) {
+     if (str[ind] == (char) ch) {
+       return (const char*) &str[ind];
+     }
+   }
+
 /** Finds the first occurrence of C-string 'needle' in C-string 'haystack'
  * Return 'haystack' when 'needle' is the empty string (ie, "").
  * The terminating null bytes are not compared.
