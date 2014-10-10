@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+// This part is for testing on my own gcc :)
 void partitionAll(int);
 void partitionOdd(int);
 void partitionEven(int);
@@ -57,20 +59,19 @@ int main(int argc, const char * argv[])
     }
   return EXIT_SUCCESS;
 }
-
+*/
 
 void partitionAll(int value)
 {
-  int * arr;
-  arr = malloc (sizeof(int)*value);
+  int * arr = malloc (sizeof(int)*(value*2));
   partitionAll_helper(value,arr,0);
   free(arr);
+  return;
 }
 
 void partitionOdd(int value)
 {
-  int * arr;
-  arr = malloc (sizeof(int)*value);
+  int * arr = malloc (sizeof(int)*(value*2));
   partitionOdd_helper(value,arr,0);
   free(arr);
 }
@@ -78,31 +79,31 @@ void partitionOdd(int value)
 void partitionEven(int value)
 {
   int * arr;
-  arr = malloc (sizeof(int)*value);
+  arr = malloc (sizeof(int)*(value));
   partitionEven_helper(value,arr,0);
   free(arr);
 }
 
 void partitionIncreasing(int value)
 {
-  int * arr;
-  arr = malloc (sizeof(int)*value);
+  int * arr = malloc (sizeof(int)*(value*2));
+  arr[0] = 0;
   partitionIncreasing_helper(value,arr,0);
   free(arr);
 }
 
 void partitionDecreasing(int value)
 {
-  int * arr;
-  arr = malloc (sizeof(int)*value);
+  int * arr = malloc (sizeof(int)*(value*2));
+  arr[0] = 0;
   partitionDecreasing_helper(value,arr,0);
   free(arr);
 }
 
 void partitionOddAndEven(int value)
 {
-  int * arr;
-  arr = malloc (sizeof(int)*value);
+  int * arr = malloc (sizeof(int)*(value*2));
+  arr[0] = 0;
   partitionOddAndEven_helper(value,arr,0);
   free(arr);
 }
@@ -110,8 +111,9 @@ void partitionOddAndEven(int value)
 void partitionPrime(int value)
 {
   int * arr;
-  arr = malloc (sizeof(int)*value);
-  partitionPrime_helper(value,arr,0);
+    arr = malloc (sizeof(int)*(value));
+  arr[0] = 0;
+    partitionPrime_helper(value,arr,0);
   free(arr);
 }
 
@@ -123,6 +125,7 @@ void partitionAll_helper(int n ,int * arr, int ind)
     int j;
     if (n==0)
     {
+      printf("= ");
       for (j=1; j < ind - 1; j++)
         {
             printf ("%d + ",arr[j]);
@@ -144,6 +147,7 @@ void partitionOdd_helper(int n ,int * arr, int ind)
     int j;
     if (n==0)
     {
+      printf("= ");
       for (j=1; j < ind - 1; j++)
         {
 	      printf ("%d + ",arr[j]);
@@ -164,6 +168,7 @@ void partitionEven_helper(int n ,int * arr, int ind)
     int j;
     if (n==0)
     {
+      printf("= ");
       for (j=1; j < ind - 1; j++)
         {
 	      printf ("%d + ",arr[j]);
@@ -186,6 +191,7 @@ void partitionIncreasing_helper(int n ,int * arr, int ind)
     int j;
     if (n==0)
     {
+      printf("= ");
       for (j=1; j < ind - 1; j++)
         {
 	      printf ("%d + ",arr[j]);
@@ -199,7 +205,6 @@ void partitionIncreasing_helper(int n ,int * arr, int ind)
 	  {
 	    partitionIncreasing_helper(n-i,arr,ind);  
 	  }
-
     }
 }
 
@@ -210,6 +215,7 @@ void partitionDecreasing_helper(int n ,int * arr, int ind)
     int j;
     if (n==0)
     {
+      printf("= ");
       for (j=1; j < ind - 1; j++)
         {
 	      printf ("%d + ",arr[j]);
@@ -219,41 +225,13 @@ void partitionDecreasing_helper(int n ,int * arr, int ind)
     for (i = 1; i<= n; i++) 
     {
         arr[ind] = i;
-	if(((n-i) <= i) && (arr[ind - 1] != i))
-	  {
+	if (ind == 1)
+	  {	    
 	    partitionDecreasing_helper(n-i,arr,ind);  
 	  }
-    }
-}
-
-void partitionPrime_helper(int n ,int * arr, int ind)
-{
-    ind++; 
-    int i;
-    int j;
-    if (n==0)
-    {
-      for (j=1; j < ind - 1; j++)
-        {
-	      printf ("%d + ",arr[j]);
-	}
-        printf("%d\n",arr[ind-1]);
-    }
-
-    for (i = 1; i<= n; i++) 
-    {
-        arr[ind] = i;
-	if (n==2)
+	if((arr[ind - 1] > arr[ind]) && (ind >= 1))
 	  {
-	    partitionPrime_helper(n-i,arr,ind);  
-	  }
-	int k;
-	for (k = 3;k<n;k++)
-	  {
-	    if (n%k != 0)
-	      {
-		partitionPrime_helper(n-i,arr,ind);  
-	      }	  
+	    partitionDecreasing_helper(n-i,arr,ind);  
 	  }
     }
 }
@@ -265,6 +243,7 @@ void partitionOddAndEven_helper(int n, int *arr, int ind)
   int j;
     if (n==0)
     {
+      printf("= ");
       for (j=1; j < ind - 1; j++)
         {
 	      printf ("%d + ",arr[j]);
@@ -282,3 +261,55 @@ void partitionOddAndEven_helper(int n, int *arr, int ind)
        }
     } 
 }
+
+
+void partitionPrime_helper(int n ,int * arr, int ind)
+{
+    ind++; 
+    int i;
+    int j;
+    if (n == 1)
+      {
+	return;
+      }
+    if (n==0)
+    {
+      printf("= ");
+      for (j=1; j < ind - 1; j++)
+        {
+	      printf ("%d + ",arr[j]);
+	}
+        printf("%d\n",arr[ind-1]);
+    }
+    for (i = 1; i<= n; i++) 
+    {
+        arr[ind] = i;
+	int k;
+	
+	if ((arr[ind]==2)  && (arr[ind] != 1))
+	  {
+	    partitionPrime_helper(n-i,arr,ind);  
+	  }
+	else
+	  { 
+	    if (arr[ind] %2 != 0)
+	      {
+		for (k = 3; k <= arr[ind]; k++)
+		  {
+		    if ((arr[ind] % k == 0)&&(arr[ind]!=k))
+		      {
+			k = arr[ind]+1;		 
+		      }
+		    else
+		      {		
+			//printf("arr[ind] = %d, k = %d\n",arr[ind],k);
+			partitionPrime_helper(n-i,arr,ind);
+			k = arr[ind]+1;
+		      }
+		    
+		  }
+	      }
+	  }
+    }
+}
+
