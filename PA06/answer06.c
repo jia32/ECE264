@@ -8,67 +8,24 @@ void print_directions(char** maze, int w, int h)
 {
   int i;
   int prex,prey;//previous location
-  int x,y;//current location
-  y = 1;
+  int col,row;//current location
+  int dir; //1-right,2-down,3-left,4-up
+  col = 0;
   for (i = 0; i<w;i++)
     {
-      if (maze[i][1] == " ")
+      if (maze[0][i] == " ")
 	{
-	  x = i;
+	  row = i;
 	}
     }
-  makemove(maze,w,h,x,y,prex,prey);
+  printf("S 1");
+  col++;
  }
 
-
-int makemove(char **maze,int w,int h, int x, int y, int prex, int prey)
+int canmove(maze, col, row, dir)
 {
-  prex = x;
-  prey = y;
-  //record the last step 
-  //in case reaching dead end
-  if (x != w)
-    {
-      
-      if (maze[x+1][y] == " ")
-	{
-	  printf("E 1");
-	  makemove(maze,w,h,x++,y,prex,prey);      
-	}
-    }
-  if (y != h)
-    {
-      if (maze[x][y+1] == " ")
-	{
-	  printf("S 1");
-	  makemove(maze,w,h,x,y++,prex,prey);    
-	}
-    }
-  if (x != 1)
-    {
-      if (maze[x-1][y] == " ")
-	{
-	  printf("W 1");
-	  makemove(maze,w,h,x--,y,prex,prey);   
-	}
-    }
-  if (y!= 1)
-    {
-      if (maze[x][y-1] == " ")
-	{
-	  printf("N 1"); 
-	  makemove(maze,w,h,x,y--,prex,prey); 
-	}
-    }
-  if (y == 2) && (maze[x][y-1] == " ")
-		{
-		  printf("N 1");
-		  break;
-		}
-  if (y == h - 1) && (maze[x][y+1] == " ")
-		{
-		  printf("S 1");		  
-		  makemove(maze,w,h,x,y--,prex,prey); 
-		}
-  printf("pre x and pre y not used");
+  
+}
+  int move(maze, col, row)
+{
 }
