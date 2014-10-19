@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 
@@ -8,7 +7,7 @@
 
 int main(int argc, char * * argv)
 {
-    printf("This is  PA02.\n")
+  printf("This is  PA02.\n");
 
 	   
     const char * s1 = "Hello World!";
@@ -47,14 +46,15 @@ int main(int argc, char * * argv)
 
     // -- my_strcat. You will have to do this yourself... just
     // look at my_strcpy for an example, and go from there.
-    char buffer[50];
-    my_strcpy(buffer,"Hello ");
-    printf("%s\n", my_strcat(buffer,"Zipper!"));
+    
+    printf("strcpy: %s\n", buffer, my_strcpy(buffer,"Hello "));
+    printf("strcat: %s\n", buffer, my_strcat(buffer,"Zipper!");
+);
     // -- my_isspace. You will have to do this for yourself.
-    printf(my_issapce(' ');
+    printf(my_issapce(' '));
   
     // -- my_atoi. You will have to do this for yourself.
-    printf(my_atoi("0");
+    printf(my_atoi("0"));
     return EXIT_SUCCESS;
 }
 

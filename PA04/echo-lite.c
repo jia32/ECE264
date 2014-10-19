@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char * * argv)
-{  
-  int val;
-  while (scanf(fptr, "%s", &val) ==1)
+
+int main(int argc,char *argv[])
+{ 
+  int i; 
+  for(i=1; i<argc; i++) 
     {
-      printf("val is %d\n", val);
+      printf("%s ",argv[i]);
     }
-    fclose(fptr);
-    return EXIT_SUCCESS;
+  printf("\n");
+  return EXIT_SUCCESS;
 }

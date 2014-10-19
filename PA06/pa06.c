@@ -12,9 +12,11 @@
 #include <string.h>
 #include "answer06.h"
 
+#include "answer06.c"
 void print_maze(char** maze, int w, int h);
 void read_and_alloc_maze(char* maze[MAX_H], FILE* input, int* p_w, int* p_h);
 void free_maze(char** maze, int h);
+void print_directions(char** maze, int w, int h);
 
 int main(int argc, char *argv[]) {
 	// Open the maze file given on the command line or else use stdin.
@@ -37,8 +39,8 @@ int main(int argc, char *argv[]) {
 	print_directions(maze, w, h);
 
 	// Uncomment these lines to print the entire maze when it finishes.
-	//printf("\n--------------------------------------\n");
-	//print_maze(maze, w, h);
+	printf("\n--------------------------------------\n");
+	print_maze(maze, w, h);
 
 	// Free the memory on the heap for the maze.
 	free_maze(maze, h);
