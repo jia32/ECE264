@@ -2,51 +2,75 @@
 #include <stdlib.h>
 #include <string.h>
 #include "answer06.h"
-/*思路
 
-1.canmove判断能否前进，能返回1，不能返回0
-2.move，往指定方向前进
-3.循环，do move while canmove1且canmove垂直方向0
-4.循环结束意味着deadend，undo move，输出
-5.调整方向(垂直方向），重新循环->recurse
-6.直到回到起点（用.标记）
+void move(char**,int,int,int);
 
-关于变量
-int dir //1-East,-2-South,-1-West,2-North
-
-现在的问题：
-关于初始位置
-*/
-void move(int *, int *, int );
-
-
-void print_direction_helper(char ** maze, int w, int h,int row, int col)
+void print_direction(char ** maze, int w, int h)
 {
-  int step = 0;
-  int dir = 1;
-  do{
-    move(maze,&row,&col,&step);
-  }while((canMove(dir))&&(!canMove(penp)));
-  printmove(dir,step);
-  print_direction_helper(maze,w,h,r,c);
-  //undo
-  printmove(dir,step);
+        int col;
+        int row = 0;
+        int i;
+
+        for (i=0;i<w,i++)
+        {
+                if (maze[0][i] == ' ')
+                        {
+                                col = i;
+                                i = w;
+                        }
+        }
+	
+        //maze[row][col] = ".";
+        
+        for (i=0;i<w,i++)
+        {
+                if (maze[h][i] == ' ')
+                        {
+                                maze[h+1][i] = 'X';
+                                i = w;
+                        }
+        }
+        move(maze,col,row,2);
 }
 
+//from is the veriable that record the direction where you come from
+//and  1-east,-1-west,-2-south,2-north
 
 
-void move(char ** maze, int * row, int *col, int *step)
+void move(char ** maze, int row, int col, int from)
 {
-  if(maze[row][col] == ' ')
-    {
-      step++;
-      col++;
-      move(maze,row,col,step);
-    }
-  return;
-}
+        /*
+        if (maze[row-1][col] == '.' && from == -2)
+        {
+                return;
+        }
+        */
+        if (maze[row][col+1] == ' ' && from != -1)
+        {
+                print("E 1")；
+                move(maze,row,col++,-1);
+                print("W 1");
+        }
 
-void printmove(int dir, int step)
-{
-  if (dir == 
+
+        if (maze[row][col-1] == ' ' && from != 1)
+        {
+                print("W 1")；
+                move(maze,row,col--,1);
+                print("E 1");
+        }
+
+        if (maze[row+1][col] == ' ' && from != 2)
+        {
+                print("S 1")；
+                move(maze,row++,col,2);
+                print("N 1");
+        }
+
+        if (maze[row-1][col] == ' ' && from != -2)
+        {
+                print("N 1")；
+                move(maze,row--,col,-2);
+                print("S 1");
+        }
 }
