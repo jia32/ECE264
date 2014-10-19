@@ -6,7 +6,8 @@
 //Which means it prints out 'direction 1' all the time
 //Based on Readme, I suppose this is acceptable for this homework
 //And my path overlaps
-void move(char**,int,int,int,int);
+void move(char**,int,int,int,int); // my recursive function
+
 void print_directions(char ** maze, int w, int h)
 {
         int col;
