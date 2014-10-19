@@ -3,14 +3,13 @@
 #include <string.h>
 #include "answer06.h"
 
-void move(char**,int,int,int);
+void move(char**,int,int,int,int);
 
 void print_directions(char ** maze, int w, int h)
 {
         int col;
         int row = 0;
         int i;
-	//int j;
         for (i=0;i<w;i++)
 	  {
 	    if (maze[0][i] == ' ')
@@ -20,19 +19,12 @@ void print_directions(char ** maze, int w, int h)
 	      }
 	  }
 	
-	printf("Entrance: row  %d, col %d\n",row,col);
+	printf("Entrance: row  %d, col %d,h %d\n",row,col,h-1);
 	maze[row][col] = '.';
         row = 1;
-	/*
-	  for (j=0;j<w;i++)
-	  {
-	  if (maze[h][j] == ' ')
-	  {
-	  maze[h+1][j] = 'X';
-	  i = w;
-	  }
-	  }*/
-        move(maze,row,col,2);
+
+	printf("S 1\n");
+        move(maze,row,col,2,h-1);
 	return;
 }
 
@@ -40,7 +32,7 @@ void print_directions(char ** maze, int w, int h)
 //and  1-east,-1-west,-2-south,2-north
 
 
-void move(char ** maze, int row, int col, int from)
+void move(char ** maze, int row, int col, int from,int h)
 {
   /*
   if (maze[row-1][col] == '.' && from == -2)
@@ -48,33 +40,42 @@ void move(char ** maze, int row, int col, int from)
       return;
     }
   */
-  //printf("row  %d, col %d, from %d\n",row,col,from);
-  
-  if (maze[row][col+1] == ' ' && from != 1)
+  printf("row  %d, col %d, from %d\n",row,col,from);
+  /*
+  if (row == h)
+    {
+      printf("N 1\n");//Reaching the Exit
+      maze[row][col] = '.';
+      move(maze,row-1,col,-2,h);
+      printf("S 1\n");
+    }
+  */
+  if (maze[row][col+1] == ' ' && from != 1) //Heading East for 1 unit
     {
       printf("E 1\n");
-      move(maze,row,col+1,-1);
+      move(maze,row,col+1,-1,h);
       printf("W 1\n");
     }
 
-  if (maze[row][col-1] == ' ' && from != -1)
-    {
-      printf("W 1\n");
-      move(maze,row,col-1,1);
-      printf("E 1\n");
-    }
-
-  if (maze[row+1][col] == ' ' && from != -2)
+  if (maze[row+1][col] == ' ' && from != -2) //Heading South for 1 unit
     {
       printf("S 1\n");
-      move(maze,row+1,col,2);
+      move(maze,row+1,col,2,h);
       printf("N 1\n");
     }
-  
-  if (maze[row-1][col] == ' ' && from != 2)
+
+  if (maze[row][col-1] == ' ' && from != -1) //Heading West for 1 unit
+    {
+      printf("W 1\n");
+      move(maze,row,col-1,1,h);
+      printf("E 1\n");
+    }
+
+
+  if (maze[row-1][col] == ' ' && from != 2)//Heading North for 1 unit
     {
       printf("N 1\n");
-      move(maze,row-1,col,-2);
+      move(maze,row-1,col,-2,h);
       printf("S 1\n");
     }
 }
