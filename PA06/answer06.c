@@ -5,13 +5,13 @@
 
 void move(char**,int,int,int);
 
-void print_direction(char ** maze, int w, int h)
+void print_directions(char ** maze, int w, int h)
 {
         int col;
         int row = 0;
         int i;
 
-        for (i=0;i<w,i++)
+        for (i=0;i<w;i++)
         {
                 if (maze[0][i] == ' ')
                         {
@@ -22,7 +22,7 @@ void print_direction(char ** maze, int w, int h)
 	
         //maze[row][col] = ".";
         
-        for (i=0;i<w,i++)
+        for (i=0;i<w;i++)
         {
                 if (maze[h][i] == ' ')
                         {
@@ -47,30 +47,30 @@ void move(char ** maze, int row, int col, int from)
         */
         if (maze[row][col+1] == ' ' && from != -1)
         {
-                print("E 1")；
-                move(maze,row,col++,-1);
-                print("W 1");
+	  printf("E 1");
+	  move(maze,row,col++,-1);
+	  printf("W 1");
         }
-
-
+	
+	
         if (maze[row][col-1] == ' ' && from != 1)
-        {
-                print("W 1")；
-                move(maze,row,col--,1);
-                print("E 1");
+	  {
+	    printf("W 1");
+	    move(maze,row,col--,1);
+	    printf("E 1");
         }
-
+	
         if (maze[row+1][col] == ' ' && from != 2)
-        {
-                print("S 1")；
-                move(maze,row++,col,2);
-                print("N 1");
-        }
-
+	  {
+	    printf("S 1");
+	    move(maze,row++,col,2);
+	    printf("N 1");
+	  }
+	
         if (maze[row-1][col] == ' ' && from != -2)
-        {
-                print("N 1")；
-                move(maze,row--,col,-2);
-                print("S 1");
+	  {
+	    printf("N 1");
+	    move(maze,row--,col,-2);
+	    printf("S 1");
         }
 }
