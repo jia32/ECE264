@@ -10,7 +10,7 @@ void print_directions(char ** maze, int w, int h)
         int col;
         int row = 0;
         int i;
-
+	//int j;
         for (i=0;i<w;i++)
         {
                 if (maze[0][i] == ' ')
@@ -20,17 +20,20 @@ void print_directions(char ** maze, int w, int h)
                         }
         }
 	
+	  printf("Entrance: row  %d, col %d\n",row,col);
         //maze[row][col] = ".";
-        
-        for (i=0;i<w;i++)
+        row = 0;
+	/*
+        for (j=0;j<w;i++)
         {
-                if (maze[h][i] == ' ')
+                if (maze[h][j] == ' ')
                         {
-                                maze[h+1][i] = 'X';
+                                maze[h+1][j] = 'X';
                                 i = w;
                         }
-        }
-        move(maze,col,row,2);
+			}*/
+        move(maze,row,col,2);
+	return;
 }
 
 //from is the veriable that record the direction where you come from
@@ -39,38 +42,41 @@ void print_directions(char ** maze, int w, int h)
 
 void move(char ** maze, int row, int col, int from)
 {
-        /*
+  /*
         if (maze[row-1][col] == '.' && from == -2)
         {
                 return;
         }
-        */
-        if (maze[row][col+1] == ' ' && from != -1)
-        {
-	  printf("E 1");
-	  move(maze,row,col++,-1);
-	  printf("W 1");
-        }
+  */
+	  
+  printf("row  %d, col %d, from %d\n",row,col,from);
+  if (maze[row][col+1] == ' ' && from != -1)
+    {
+      printf("E 1\n");
+      move(maze,row,col++,-1);
+      printf("W 1\n");
+    }
+  
+  
+  if (maze[row][col-1] == ' ' && from != 1)
+    {
+      printf("W 1\n");
+      move(maze,row,col--,1);
+      printf("E 1\n");
+    }
 	
-	
-        if (maze[row][col-1] == ' ' && from != 1)
-	  {
-	    printf("W 1");
-	    move(maze,row,col--,1);
-	    printf("E 1");
-        }
-	
-        if (maze[row+1][col] == ' ' && from != 2)
-	  {
-	    printf("S 1");
-	    move(maze,row++,col,2);
-	    printf("N 1");
-	  }
-	
-        if (maze[row-1][col] == ' ' && from != -2)
-	  {
-	    printf("N 1");
-	    move(maze,row--,col,-2);
-	    printf("S 1");
-        }
+  if (maze[row+1][col] == ' ' && from != 2)
+    {
+      printf("S 1\n");
+      move(maze,row++,col,2);
+      printf("N 1\n");
+    }
+  
+  if (maze[row-1][col] == ' ' && from != -2)
+    {
+      printf("N 1\n");
+      move(maze,row--,col,-2);
+      printf("S 1\n");
+    }
+  
 }
