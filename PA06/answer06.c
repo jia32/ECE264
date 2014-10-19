@@ -11,7 +11,8 @@ void move(char**,int,int,int,int); // my recursive function
 void print_directions(char ** maze, int w, int h)
 {
         int col;
-        int row = 0;
+        int row;
+	//maze[row][col] represent the current location
         int i;
         for (i=0;i<w;i++)
 	  {
@@ -21,13 +22,15 @@ void print_directions(char ** maze, int w, int h)
 		i = w;
 	      }
 	  }	
-	//For testing
-	//printf("Entrance: row  %d, col %d,h %d\n",row,col,h-1);
+	//for loop is to find the entrance
+	//set the current location at the entrance
+
+	//For testing: printf("Entrance: row  %d, col %d,h %d\n",row,col,h-1);
 	
 	maze[row][col] = '.'; // Mark the Entrance as '.'
         row = 1;
 	printf("S 1\n"); //Move South for 1 Unit automaticly
-        move(maze,row,col,2,h-1);
+        move(maze,row,col,2,h-1);//Start to move!
 	return;
 }
 
@@ -36,16 +39,15 @@ void print_directions(char ** maze, int w, int h)
 
 void move(char ** maze, int row, int col, int from,int h)
 {
-  //For testing
-  //printf("row  %d, col %d, from %d\n",row,col,from);
+  //For testing: printf("row  %d, col %d, from %d\n",row,col,from);
 
-  if (maze[row][col+1] == ' ' && from != 1) //Heading East for 1 unit
+  if (maze[row][col+1] == ' ' && from != 1) //Heading to East if East is good and I wasn't coming from west
     {
       printf("E 1\n");
-      move(maze,row,col+1,-1,h);
+      move(maze,row,col+1,-1,h);//Heading East for 1 unit
       printf("W 1\n");
     }
-
+  //Similar logic. Thanks to Prof. Lu
   if (maze[row+1][col] == ' ' && from != -2 && row+1 != h) //Heading South for 1 unit
     {
       printf("S 1\n");
