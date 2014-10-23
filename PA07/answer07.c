@@ -99,39 +99,41 @@ Image * Image_load(const char * filename)
     }
     
 
-    if(!err) { // Read pixel data
-      size_t bytes_per_row = (8 * header.width);
-      n_bytes = bytes_per_row * header.height;
-      uint8_t * rawbmp = malloc(n_bytes);
-      if(rawbmp == NULL) {
-	fprintf(stderr, "Could not allocate %zd bytes of image data\n",
-		n_bytes);
-	err = TRUE;
-      } else {
-	read = fread(rawbmp, sizeof(uint8_t), n_bytes, fp);
-	if(n_bytes != read) {
-	  fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
-		  read, n_bytes);
+    if(!err) 
+      { // Read pixel data
+	size_t bytes_per_row =  header.width;
+	n_bytes = bytes_per_row * header.height;
+	uint8_t * raw = malloc(n_bytes);
+	if(raw == NULL) {
+	  fprintf(stderr, "Could not allocate %zd bytes of image data\n",
+		  n_bytes);
 	  err = TRUE;
 	} else {
-	  // Must convert RGB to grayscale
-	  uint8_t * write_ptr = tmp_im->data;
-	  uint8_t * read_ptr;
-	  int intensity;
-	  int row, col; // row and column
-	  for(row = 0; row < header.height; ++row) {
-	    read_ptr = &rawbmp[row * bytes_per_row];
-	    for(col = 0; col < header.width; ++col) {
-	      intensity  = *read_ptr++; // blue
-	      intensity += *read_ptr++; // green
-	      intensity += *read_ptr++; // red	
-	      *write_ptr++ = intensity / 3; // now grayscale
+	  read = fread(raw, sizeof(uint8_t), n_bytes, fp);
+	  if(n_bytes != read) {
+	    fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
+		    read, n_bytes);
+	    err = TRUE;
+	} else 
+	    {
+	      // Must convert RGB to grayscale
+	      uint8_t * write_ptr = tmp_im->data;
+	      uint8_t * read_ptr;
+	      int intensity;
+	      int row, col; // row and column
+	      for(row = 0; row < header.height; ++row) {
+		read_ptr = &raw[row * bytes_per_row];
+		for(col = 0; col < header.width; ++col) {
+		  intensity  = *read_ptr++; // blue
+		intensity += *read_ptr++; // green
+		intensity += *read_ptr++; // red	
+		*write_ptr++ = intensity / 3; // now grayscale
+		}
+	      }
 	    }
-	  }
 	}
+      	free(raw);
       }
-      free(rawbmp);
-    }
     
     if(!err) { // We should be at the end of the file now
       uint8_t byte;
@@ -218,7 +220,7 @@ int Image_save(const char * filename, Image * image)
     }
 
     // Number of bytes stored on each row
-    size_t bytes_per_row = (8 * image->width);
+    size_t bytes_per_row =  image->width;
 
     // Prepare the header
     ImageHeader header;
@@ -277,60 +279,28 @@ int Image_save(const char * filename, Image * image)
 
 void linearNormalization(int width, int height, uint8_t * intensity)
 {
-  unsigned char redmin = 255;
-  unsigned char redmax = 0;
-  unsigned char greenmin = 255;
-  unsigned char greenmax = 0;
-  unsigned char bluemin = 255;
-  unsigned char bluemax = 0;
+  uint8_t max = intensity[0];
+  uint8_t min = intensity[0];
   int i;
   int j;
-  int size = width * height;
-  for(i = 0; i < size; i+=3)
+  int size;
+  for(i = 0; i < size; i++)
     {
-      unsigned char red = intensity[i+2];
-      unsigned char green = intensity[i+1];
-      unsigned char blue = intensity[i];
-      if(redmin>red){redmin = red;}	 
-      if(redmin<red){redmax = red;}
-      if(greenmin>green){greenmin = green;}	 
-      if(greenmin<green){greenmax = green;}
-      if(bluemin>blue){bluemin = blue;}	 
-      if(bluemin<blue){bluemax = blue;}      
-    }
-  double redscale = 1.0;
-  double greenscale = 1.0;
-  double bluescale = 1.0;
-  
-  if (redmax>redmin)
-    {
-      redscale = 255.0/(redmax-redmin);
-    }
-  
-  if (greenmax>greenmin)
-    {
-      greenscale = 255.0/(greenmax-greenmin);
-    }
-  
-  if (bluemax>bluemin)
-    {
-      bluescale = 255.0/(bluemax-bluemin);
-    }
-  
-  for(j = 0;j < size; j+=3)
-    {
-      if (redmax>redmin)
+	  if (intensity[i] > max)
 	    {
-	      intensity[j] = (int)(redscale*(intensity[j]-redmin));
+	      max = intensity[i];
 	    }
-      if (greenmax>greenmin)
-	{
-	  intensity[j] = (int)(greenscale*(intensity[j]-greenmin));
-	}
-      if (bluemax>bluemin)
-	{
-	  intensity[j] = (int)(bluescale*(intensity[j]-bluemin));
-	}
+	  if (intensity[i] < min)
+	    {
+	      min = intensity[i];
+	    }
     }
-}  
+  
+  for (j=0; j<size; j++)
+    {
+      intensity[j] = (intensity[j]-min) * 255.0/(max-min);
+    } 
+}
+
+  
 

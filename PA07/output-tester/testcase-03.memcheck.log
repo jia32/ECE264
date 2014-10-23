@@ -1,0 +1,97 @@
+==23129== Memcheck, a memory error detector
+==23129== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==23129== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==23129== Command: ./a.out images/bmps/03-unnormalized-hawkes-bay-NZ.bmp --normalize student-out-02_03-hawkes-bay-NZ.bmp
+==23129== Parent PID: 23128
+==23129== 
+--23129-- 
+--23129-- Valgrind options:
+--23129--    --tool=memcheck
+--23129--    --leak-check=full
+--23129--    --verbose
+--23129--    --log-file=memcheck-02.log
+--23129-- Contents of /proc/version:
+--23129--   Linux version 2.6.32-431.23.3.el6.x86_64 (mockbuild@x86-027.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC) ) #1 SMP Wed Jul 16 06:12:23 EDT 2014
+--23129-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--23129-- Page sizes: currently 4096, max supported 4096
+--23129-- Valgrind library directory: /usr/lib64/valgrind
+--23129-- Reading syms from /tmp/.5R3GI2/a.out
+--23129-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--23129--    object doesn't have a dynamic symbol table
+--23129-- Reading syms from /lib64/ld-2.12.so
+--23129--   Considering /usr/lib/debug/.build-id/3b/fa45bce0e82e1d90d37a0cc8630f97f2003bf5.debug ..
+--23129--   .. build-id is valid
+--23129-- Scheduler: using generic scheduler lock implementation.
+--23129-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==23129== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-23129-by-jia32-on-ecegrid-thin2.ecn.purdue.edu
+==23129== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-23129-by-jia32-on-ecegrid-thin2.ecn.purdue.edu
+==23129== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-23129-by-jia32-on-ecegrid-thin2.ecn.purdue.edu
+==23129== 
+==23129== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==23129== don't want to do, unless you know exactly what you're doing,
+==23129== or are doing some strange experiment):
+==23129==   /usr/lib64/valgrind/../../bin/vgdb --pid=23129 ...command...
+==23129== 
+==23129== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==23129==   /path/to/gdb ./a.out
+==23129== and then give GDB the following command
+==23129==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=23129
+==23129== --pid is optional if only one valgrind process is running
+==23129== 
+--23129-- REDIR: 0x30c8e17610 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--23129-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--23129-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--23129-- REDIR: 0x30c8e17480 (index) redirected to 0x4a07c30 (index)
+--23129-- REDIR: 0x30c8e17500 (strcmp) redirected to 0x4a08570 (strcmp)
+--23129-- Reading syms from /lib64/libc-2.12.so
+--23129--   Considering /usr/lib/debug/.build-id/73/3ad3a438b5a695f7a63a77413f9b2c8c94e8e6.debug ..
+--23129--   .. build-id is valid
+--23129-- REDIR: 0x30c9284cd0 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--23129-- REDIR: 0x30c9286f90 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--23129-- REDIR: 0x30c9282c40 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--23129-- REDIR: 0x30c927f6e0 (strcmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--23129-- REDIR: 0x30c9328420 (__strcmp_sse42) redirected to 0x4a084d0 (strcmp)
+--23129-- REDIR: 0x30c9281120 (strlen) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--23129-- REDIR: 0x30c93336f0 (__strlen_sse42) redirected to 0x4a07f90 (strlen)
+--23129-- REDIR: 0x30c928aaf0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+--23129-- REDIR: 0x30c9284500 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--23129-- REDIR: 0x30c927b520 (free) redirected to 0x4a063a9 (free)
+--23129-- REDIR: 0x30c927a640 (malloc) redirected to 0x4a069ac (malloc)
+--23129-- REDIR: 0x30c9289670 (memcpy) redirected to 0x4a08b60 (memcpy)
+--23129-- REDIR: 0x30c9281160 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+==23129== Conditional jump or move depends on uninitialised value(s)
+==23129==    at 0x4012AE: linearNormalization (answer07.c:287)
+==23129==    by 0x402006: main (<stdin>:79)
+==23129== 
+==23129== Conditional jump or move depends on uninitialised value(s)
+==23129==    at 0x401312: linearNormalization (answer07.c:299)
+==23129==    by 0x402006: main (<stdin>:79)
+==23129== 
+--23129-- REDIR: 0x30c92839a0 (memset) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--23129-- REDIR: 0x30c92839e0 (__GI_memset) redirected to 0x4a09a50 (memset)
+==23129== 
+==23129== HEAP SUMMARY:
+==23129==     in use at exit: 0 bytes in 0 blocks
+==23129==   total heap usage: 8 allocs, 8 frees, 242,159 bytes allocated
+==23129== 
+==23129== All heap blocks were freed -- no leaks are possible
+==23129== 
+==23129== Use --track-origins=yes to see where uninitialised values come from
+==23129== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 6 from 6)
+==23129== 
+==23129== 1 errors in context 1 of 2:
+==23129== Conditional jump or move depends on uninitialised value(s)
+==23129==    at 0x401312: linearNormalization (answer07.c:299)
+==23129==    by 0x402006: main (<stdin>:79)
+==23129== 
+==23129== 
+==23129== 1 errors in context 2 of 2:
+==23129== Conditional jump or move depends on uninitialised value(s)
+==23129==    at 0x4012AE: linearNormalization (answer07.c:287)
+==23129==    by 0x402006: main (<stdin>:79)
+==23129== 
+--23129-- 
+--23129-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--23129-- used_suppression:      2 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==23129== 
+==23129== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 6 from 6)

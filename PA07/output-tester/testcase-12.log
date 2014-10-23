@@ -1,0 +1,8 @@
+
+/**
+ * Testcase 11 :: images/02-cat-chess.ee264 
+ * Test reading ee264 format
+ */
+Only read 67530 of 540000 bytes of image data
+Error: failed to read 'images/02-cat-chess.ee264'
+Attempt to read 'images/02-cat-chess.ee264' as .ee264 format

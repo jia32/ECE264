@@ -1,0 +1,8 @@
+
+/**
+ * Testcase 10 :: images/01-smile.ee264 
+ * Test reading ee264 format
+ */
+Only read 67002 of 535808 bytes of image data
+Error: failed to read 'images/01-smile.ee264'
+Attempt to read 'images/01-smile.ee264' as .ee264 format
