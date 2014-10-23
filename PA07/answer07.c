@@ -25,8 +25,10 @@ int main(int argc, char * * argv)
   return EXIT_SUCCESS;
 }
 
-
-Image * Image_loadbmp(const char * filename)
+//I copied lodebmp.c and changed a bit code to finish Image_load and Image_save
+//I changed the attrubites, and the bytes per pixel(24 for bmp and 8 for ee264)
+//And for image load, I changed some error print out to check if it is functioning.
+Image * Image_load(const char * filename)
 {
   FILE *fp = NULL;
   ImageHeader header;
@@ -208,7 +210,7 @@ static int checkValid(ImageHeader * header,const char * filename)
 
 }
  
-int Image_savebmp(const char * filename, Image * image)
+int Image_save(const char * filename, Image * image)
 {
     int err = FALSE; 
     FILE * fp = NULL;
