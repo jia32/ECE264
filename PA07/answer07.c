@@ -16,7 +16,7 @@ int main(int argc, char * * argv)
   const char * in_filename = argv[1];
   
   // Read the file
-  Image * im = Image_loadbmp(in_filename);
+  Image * im = Image_load(in_filename);
   if(im == NULL) 
     {
       fprintf(stderr, "Error: failed to read '%s'\n", in_filename);
@@ -25,7 +25,7 @@ int main(int argc, char * * argv)
   return EXIT_SUCCESS;
 }
 
-//I copied lodebmp.c and changed a bit code to finish Image_load and Image_save
+//I copied loadmp.c and changed a bit code to finish Image_load and Image_save
 //I changed the attrubites, and the bytes per pixel(24 for bmp and 8 for ee264)
 //And for image load, I changed some error print out to check if it is functioning.
 Image * Image_load(const char * filename)
@@ -59,7 +59,7 @@ Image * Image_load(const char * filename)
     { // We're only interested in a subset of valid bmp files
       if(!checkValid(&header,filename)) 
 	{
-	  fprintf(stderr, "Invalid header in %s\n",filename);
+	  fprintf(stderr, "Invalid header in '%s\n'",filename);
 	  err = TRUE;
 	}
     }
@@ -70,6 +70,7 @@ Image * Image_load(const char * filename)
       if(tmp_im == NULL) {
 	fprintf(stderr, "Failed to allocate im structure\n");
 	err = TRUE;
+	free(tmp_im);
       } 
     }
   
@@ -114,7 +115,7 @@ Image * Image_load(const char * filename)
     
 
     if(!err) { // Read pixel data
-      size_t bytes_per_row = ((8 * header.width + 31)/32) * 4;
+      size_t bytes_per_row = (8 * header.width);
       n_bytes = bytes_per_row * header.height;
       uint8_t * rawbmp = malloc(n_bytes);
       if(rawbmp == NULL) {
@@ -165,10 +166,9 @@ Image * Image_load(const char * filename)
     
     // Cleanup
     if(tmp_im != NULL) {
-      free(tmp_im->comment); // Remember, you can always free(NULL)
-      free(tmp_im->data);
-      free(tmp_im);
+      Image_free(tmp_im);
     }
+
     if(fp) {
       fclose(fp);
     }
@@ -176,6 +176,14 @@ Image * Image_load(const char * filename)
     return im;
     
 }
+
+void Image_free(Image*image)
+{
+  free(image->comment);
+  free(image->data);
+  free(image);
+}
+
 
 static int checkValid(ImageHeader * header,const char * filename)
 {
@@ -225,11 +233,10 @@ int Image_save(const char * filename, Image * image)
     }
 
     // Number of bytes stored on each row
-    size_t bytes_per_row = ((8  * image->width + 31)/32) * 4;
+    size_t bytes_per_row = ((8 * image->width + 31)/32) * 4;
 
     // Prepare the header
     ImageHeader header;
-    header.type = ECE264_IMAGE_MAGIC_NUMBER;
     header.width = image->width;
     header.height = image->height;
 
@@ -259,12 +266,13 @@ int Image_save(const char * filename, Image * image)
 	int row, col; // row and column
 	for(row = 0; row < header.height && !err; ++row) {
 	    uint8_t * write_ptr = buffer;
-	    for(col = 0; col < header.width; ++col) {
+	    for(col = 0; col < header.width; ++col)
+	      {
 		*write_ptr++ = *read_ptr; // blue
 		*write_ptr++ = *read_ptr; // green
 		*write_ptr++ = *read_ptr; // red
 		read_ptr++; // advance to the next pixel
-	    }
+	      }
 	    // Write line to file
 	    written = fwrite(buffer, sizeof(uint8_t), bytes_per_row, fp);
 	    if(written != bytes_per_row) {
