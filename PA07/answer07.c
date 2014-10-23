@@ -10,23 +10,8 @@
 #define TRUE 1
 static int checkValid(ImageHeader * header,const char*filename);
 
-//For testing
-int main(int argc, char * * argv)
-{
-  const char * in_filename = argv[1];
-  
-  // Read the file
-  Image * im = Image_load(in_filename);
-  if(im == NULL) 
-    {
-      fprintf(stderr, "Error: failed to read '%s'\n", in_filename);
-      return EXIT_FAILURE;
-    }
-  return EXIT_SUCCESS;
-}
-
 //I copied loadmp.c and changed a bit code to finish Image_load and Image_save
-//I changed the attrubites, and the bytes per pixel(24 for bmp and 8 for ee264)
+//I changed the attrubites, and the bytes per pixel(24 for pixel and 8 for ee264)
 //And for image load, I changed some error print out to check if it is functioning.
 Image * Image_load(const char * filename)
 {
@@ -233,7 +218,7 @@ int Image_save(const char * filename, Image * image)
     }
 
     // Number of bytes stored on each row
-    size_t bytes_per_row = ((8 * image->width + 31)/32) * 4;
+    size_t bytes_per_row = (8 * image->width);
 
     // Prepare the header
     ImageHeader header;
@@ -289,3 +274,63 @@ int Image_save(const char * filename, Image * image)
 
     return !err;
 }
+
+void linearNormalization(int width, int height, uint8_t * intensity)
+{
+  unsigned char redmin = 255;
+  unsigned char redmax = 0;
+  unsigned char greenmin = 255;
+  unsigned char greenmax = 0;
+  unsigned char bluemin = 255;
+  unsigned char bluemax = 0;
+  int i;
+  int j;
+  int size = width * height;
+  for(i = 0; i < size; i+=3)
+    {
+      unsigned char red = intensity[i+2];
+      unsigned char green = intensity[i+1];
+      unsigned char blue = intensity[i];
+      if(redmin>red){redmin = red;}	 
+      if(redmin<red){redmax = red;}
+      if(greenmin>green){greenmin = green;}	 
+      if(greenmin<green){greenmax = green;}
+      if(bluemin>blue){bluemin = blue;}	 
+      if(bluemin<blue){bluemax = blue;}      
+    }
+  double redscale = 1.0;
+  double greenscale = 1.0;
+  double bluescale = 1.0;
+  
+  if (redmax>redmin)
+    {
+      redscale = 255.0/(redmax-redmin);
+    }
+  
+  if (greenmax>greenmin)
+    {
+      greenscale = 255.0/(greenmax-greenmin);
+    }
+  
+  if (bluemax>bluemin)
+    {
+      bluescale = 255.0/(bluemax-bluemin);
+    }
+  
+  for(j = 0;j < size; j+=3)
+    {
+      if (redmax>redmin)
+	    {
+	      intensity[j] = (int)(redscale*(intensity[j]-redmin));
+	    }
+      if (greenmax>greenmin)
+	{
+	  intensity[j] = (int)(greenscale*(intensity[j]-greenmin));
+	}
+      if (bluemax>bluemin)
+	{
+	  intensity[j] = (int)(bluescale*(intensity[j]-bluemin));
+	}
+    }
+}  
+
