@@ -130,7 +130,7 @@ Image * Image_load(const char * filename)
 	}
 	free(raw);
       }
-    /*
+ 
     if(!err) { // We should be at the end of the file now
       uint8_t byte;
       read = fread(&byte, sizeof(uint8_t), 1, fp);
@@ -140,7 +140,7 @@ Image * Image_load(const char * filename)
 	err = TRUE;
       }
     }
-    */
+
     
     if(!err) { // We're winners... 
       im = tmp_im;  // bmp will be returned
@@ -220,6 +220,7 @@ int Image_save(const char * filename, Image * image)
 
     // Prepare the header
     ImageHeader header;
+    int size = header.width * header.height;
     header.width = image->width;
     header.height = image->height;
 
@@ -234,43 +235,36 @@ int Image_save(const char * filename, Image * image)
     }
 
     if(!err) { // Before writing, we'll need a write buffer
-	buffer = malloc(bytes_per_row);
+	buffer = malloc(size);
 	if(buffer == NULL) {
 	    fprintf(stderr, "Error: failed to allocate write buffer\n");
 	    err = TRUE;
 	} else {
 	    // not strictly necessary, we output file will be tidier.
-	    memset(buffer, 0, bytes_per_row); 
+	    memset(buffer, 0, size); 
 	}
     }
 
     if(!err) { // Write pixels	
 	uint8_t * read_ptr = image->data;
 	int i;
-	int size = header.width * header.height;
-	uint8_t * write_ptr = buffer;
 	for (i = 0; i < size && !err; i++)
 	  {
-	    *write_ptr = read_ptr[i];
+	    buffer[i] = read_ptr[i];
 	  }
-	// Write line to file
 	written = fwrite(buffer, sizeof(uint8_t), bytes_per_row, fp);
-	if(written != bytes_per_row) {
+	/*if(written != bytes_per_row) {
 	  fprintf(stderr, "Failed to write pixel data to file\n");
 	  err = TRUE;
-	}
+	  }*/
     }
     
     
     // Cleanup
-    
-    free(buffer);
-    /*
     if(fp)
-      {
-	fclose(fp);
-      }
-    */
+      {fclose(fp);}
+    free(buffer);
+    
     return !err;
 }
 
