@@ -130,7 +130,7 @@ Image * Image_load(const char * filename)
 	}
 	free(raw);
       }
-    
+    /*
     if(!err) { // We should be at the end of the file now
       uint8_t byte;
       read = fread(&byte, sizeof(uint8_t), 1, fp);
@@ -140,7 +140,7 @@ Image * Image_load(const char * filename)
 	err = TRUE;
       }
     }
-    
+    */
     
     if(!err) { // We're winners... 
       im = tmp_im;  // bmp will be returned
@@ -265,9 +265,12 @@ int Image_save(const char * filename, Image * image)
     // Cleanup
     
     free(buffer);
+    /*
     if(fp)
-      fclose(fp);
-    
+      {
+	fclose(fp);
+      }
+    */
     return !err;
 }
 
