@@ -101,36 +101,39 @@ Image * Image_load(const char * filename)
 
     if(!err) 
       { // Read pixel data
-	size_t bytes_per_row =  header.width;
+	size_t bytes_per_row =  8 * header.width;
 	n_bytes = bytes_per_row * header.height;
 	uint8_t * raw = malloc(n_bytes);
-	if(raw == NULL) {
-	  fprintf(stderr, "Could not allocate %zd bytes of image data\n",
-		  n_bytes);
-	  err = TRUE;
-	} else {
-	  read = fread(raw, sizeof(uint8_t), n_bytes, fp);
-	  if(n_bytes != read) {
-	    fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
-		    read, n_bytes);
+	if(raw == NULL) 
+	  {
+	    fprintf(stderr, "Could not allocate %zd bytes of image data\n",
+		    n_bytes);
 	    err = TRUE;
-	} else 
+	  }
+	else {
+	  read = fread(raw, sizeof(uint8_t), n_bytes, fp);
+	  if(n_bytes != read)
 	    {
-	      // Must convert RGB to grayscale
-	      uint8_t * write_ptr = tmp_im->data;
-	      uint8_t * read_ptr;
-	      int intensity;
-	      int row, col; // row and column
-	      for(row = 0; row < header.height; ++row) {
-		read_ptr = &raw[row * bytes_per_row];
-		for(col = 0; col < header.width; ++col) {
-		  intensity  = *read_ptr++; // blue
+	      fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
+		      read, n_bytes);
+	      err = TRUE;
+	    } 
+	  else {
+	    // Must convert RGB to grayscale
+	    uint8_t * write_ptr = tmp_im->data;
+	    uint8_t * read_ptr;
+	    int intensity;
+	    int row, col; // row and column
+	    for(row = 0; row < header.height; ++row) {
+	      read_ptr = &raw[row * bytes_per_row];
+	      for(col = 0; col < header.width; ++col) {
+		intensity  = *read_ptr++; // blue
 		intensity += *read_ptr++; // green
 		intensity += *read_ptr++; // red	
 		*write_ptr++ = intensity / 3; // now grayscale
-		}
 	      }
 	    }
+	  }
 	}
       	free(raw);
       }
@@ -220,7 +223,7 @@ int Image_save(const char * filename, Image * image)
     }
 
     // Number of bytes stored on each row
-    size_t bytes_per_row =  image->width;
+    size_t bytes_per_row =  8 * image->width;
 
     // Prepare the header
     ImageHeader header;
