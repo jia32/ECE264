@@ -101,7 +101,7 @@ Image * Image_load(const char * filename)
 
     if(!err) 
       { // Read pixel data
-	size_t bytes_per_row =  8 * header.width;
+	size_t bytes_per_row =  header.width;
 	n_bytes = bytes_per_row * header.height;
 	uint8_t * raw = malloc(n_bytes);
 	if(raw == NULL) 
@@ -119,23 +119,16 @@ Image * Image_load(const char * filename)
 	      err = TRUE;
 	    } 
 	  else {
-	    // Must convert RGB to grayscale
+	    //Read intensity
 	    uint8_t * write_ptr = tmp_im->data;
-	    uint8_t * read_ptr;
-	    int intensity;
-	    int row, col; // row and column
-	    for(row = 0; row < header.height; ++row) {
-	      read_ptr = &raw[row * bytes_per_row];
-	      for(col = 0; col < header.width; ++col) {
-		intensity  = *read_ptr++; // blue
-		intensity += *read_ptr++; // green
-		intensity += *read_ptr++; // red	
-		*write_ptr++ = intensity / 3; // now grayscale
+	    int i;
+	    for(i = 0; i < n_bytes;i++)
+	      {
+		*write_ptr++ = raw[i];
 	      }
-	    }
 	  }
 	}
-      	free(raw);
+	free(raw);
       }
     
     if(!err) { // We should be at the end of the file now
@@ -223,7 +216,7 @@ int Image_save(const char * filename, Image * image)
     }
 
     // Number of bytes stored on each row
-    size_t bytes_per_row =  8 * image->width;
+    size_t bytes_per_row =  image->width;
 
     // Prepare the header
     ImageHeader header;
@@ -252,31 +245,29 @@ int Image_save(const char * filename, Image * image)
     }
 
     if(!err) { // Write pixels	
-	uint8_t * read_ptr = image->data;	
-	int row, col; // row and column
-	for(row = 0; row < header.height && !err; ++row) {
-	    uint8_t * write_ptr = buffer;
-	    for(col = 0; col < header.width; ++col)
-	      {
-		*write_ptr++ = *read_ptr; // blue
-		*write_ptr++ = *read_ptr; // green
-		*write_ptr++ = *read_ptr; // red
-		read_ptr++; // advance to the next pixel
-	      }
-	    // Write line to file
-	    written = fwrite(buffer, sizeof(uint8_t), bytes_per_row, fp);
-	    if(written != bytes_per_row) {
-		fprintf(stderr, "Failed to write pixel data to file\n");
-		err = TRUE;
-	    }
+	uint8_t * read_ptr = image->data;
+	int i;
+	int size = header.width * header.height;
+	uint8_t * write_ptr = buffer;
+	for (i = 0; i < size && !err; i++)
+	  {
+	    *write_ptr = read_ptr[i];
+	  }
+	// Write line to file
+	written = fwrite(buffer, sizeof(uint8_t), bytes_per_row, fp);
+	if(written != bytes_per_row) {
+	  fprintf(stderr, "Failed to write pixel data to file\n");
+	  err = TRUE;
 	}
     }
     
+    
     // Cleanup
+    
     free(buffer);
     if(fp)
-	fclose(fp);
-
+      fclose(fp);
+    
     return !err;
 }
 
