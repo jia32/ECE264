@@ -201,16 +201,16 @@ int Image_save(const char * filename, Image * image)
     if(!err)
       { //Write Comments
 	n_bytes = header.comment_len;
-	char * comment;
-	comment = malloc(sizeof(char)*n_bytes);
-	comment = image->comment;
-	written = fwrite(comment,sizeof(char),n_bytes,fp);
+	//char * comment;
+	//comment = malloc(sizeof(char)*n_bytes);
+	//comment = image->comment;
+	written = fwrite(image->comment,sizeof(char),n_bytes,fp);
 	/*Testing comments
 	  printf("Writing comment...\nComment is: %s\n",comment);
 	  printf("Comment length is %d\n",n_bytes);
 	  printf("Comment ends as %s\n",comment[n_bytes]);
 	*/
-	free(comment);
+	//free(comment);
 	if(written != n_bytes)
 	  {
 	    printf("Fail to write data to file\n");
@@ -221,12 +221,12 @@ int Image_save(const char * filename, Image * image)
     if(!err) 
       { // Write pixels	
 	n_bytes = header.width * header.height;
-	uint8_t * data;
+	//uint8_t * data;
 	printf("Writing %d bytes for pixel data\n",n_bytes);
-	data = malloc(sizeof(uint8_t)*n_bytes);
-	data = image->data;
-	written = fwrite(data,sizeof(uint8_t),n_bytes,fp);
-	free(data);
+	//data = malloc(sizeof(uint8_t)*n_bytes);
+	//data = image->data;
+	written = fwrite(image->data,sizeof(uint8_t),n_bytes,fp);
+	//free(data);
       }
     
     
