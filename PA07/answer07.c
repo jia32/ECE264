@@ -41,7 +41,7 @@ Image * Image_load(const char * filename)
     }    
   
   if(!err)
-    { // We're only interested in a subset of valid bmp files
+    { // We're only interested in a subset of valid files
       if(!checkValid(&header,filename)) 
 	{
 	  fprintf(stderr, "Invalid header in '%s\n'",filename);
@@ -59,28 +59,19 @@ Image * Image_load(const char * filename)
       } 
     }
   
-    if(!err) { // Initialize the Image struct
+    if(!err)
+      { // Initialize the Image struct
 	tmp_im->width = header.width;
 	tmp_im->height = header.height;
 
-	// Handle the comment
-	char * filename_cpy = strdup(filename);	// we want to call basename
-	char * file_basename = basename(filename_cpy); // requires editable str
-	const char * prefix = "Original BMP file: ";
-	n_bytes = sizeof(char) * (strlen(prefix) + strlen(file_basename) + 1);
-	tmp_im->comment = malloc(n_bytes);
-	if(tmp_im->comment == NULL) 
-	  {
-	    fprintf(stderr, "Failed to allocate %zd bytes for comment\n",
-		    n_bytes);
-	    err = TRUE;
-	  } else {
-	  sprintf(tmp_im->comment, "%s%s", prefix, file_basename);
-	}
-	free(filename_cpy); // this also takes care of file_basename
-	
+	//Reading comment
+	n_bytes = header.comment_len;
+	tmp_im->comment = malloc(sizeof(char*)*n_bytes);
+	read = fread(tmp_im->comment,sizeof(char),n_bytes,fp);
+	printf("Comment is :%s\n ",tmp_im->comment);
+
 	// Handle image data
-	n_bytes = sizeof(uint8_t) * header.width * header.height;
+	n_bytes = header.width * header.height;
 	tmp_im->data = malloc(n_bytes);
 	if(tmp_im->data == NULL) 
 	  {
@@ -90,19 +81,19 @@ Image * Image_load(const char * filename)
 	  }
     }
 
-    if(!err) { // Seek the start of the pixel data
-      if(fseek(fp,22, SEEK_SET) != 0) {
-	fprintf(stderr, "Failed to seek %d, the data of the image data\n",
-		22);
-	err = TRUE;
+    if(!err) 
+      { // Seek the start of the pixel data
+	if(fseek(fp,22, SEEK_SET) != 0) {
+	  fprintf(stderr, "Failed to seek %d, the data of the image data\n",
+		  22);
+	  err = TRUE;
+	}
       }
-    }
     
 
     if(!err) 
       { // Read pixel data
-	size_t bytes_per_row =  header.width;
-	n_bytes = bytes_per_row * header.height;
+	n_bytes = header.width* header.height;
 	uint8_t * raw = malloc(n_bytes);
 	if(raw == NULL) 
 	  {
@@ -110,51 +101,56 @@ Image * Image_load(const char * filename)
 		    n_bytes);
 	    err = TRUE;
 	  }
-	else {
-	  read = fread(raw, sizeof(uint8_t), n_bytes, fp);
-	  if(n_bytes != read)
-	    {
-	      fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
-		      read, n_bytes);
-	      err = TRUE;
-	    } 
-	  else {
-	    //Read intensity
-	    uint8_t * write_ptr = tmp_im->data;
-	    int i;
-	    for(i = 0; i < n_bytes;i++)
+	else 
+	  {
+	    read = fread(raw, sizeof(uint8_t), n_bytes, fp);
+	    if(n_bytes != read)
 	      {
-		*write_ptr++ = raw[i];
+		fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
+			read, n_bytes);
+		err = TRUE;
+	      } 
+	  else 
+	    {
+	      int i;
+	      for(i = 0; i < n_bytes;i++)
+		{
+		  tmp_im->data[i] = raw[i];
 	      }
+	    }
 	  }
-	}
 	free(raw);
       }
- 
-    if(!err) { // We should be at the end of the file now
-      uint8_t byte;
-      read = fread(&byte, sizeof(uint8_t), 1, fp);
-      if(read != 0) {
-	fprintf(stderr, "Stray bytes at the end of bmp file '%s'\n",
-		filename);
-	err = TRUE;
-      }
-    }
-
     
-    if(!err) { // We're winners... 
-      im = tmp_im;  // bmp will be returned
-      tmp_im = NULL; // and not cleaned up
-    }
+    if(!err) 
+      { // We should be at the end of the file now
+	uint8_t byte;
+	read = fread(&byte, sizeof(uint8_t), 1, fp);
+	if(read != 0) 
+	  {
+	    fprintf(stderr, "Stray bytes at the end of file '%s'.\n",
+		    filename);
+	    err = TRUE;
+	  }
+      }
+    
+    
+    if(!err) 
+      { // We're winners... 
+	im = tmp_im;  // bmp will be returned
+	tmp_im = NULL; // and not cleaned up
+      }
     
     // Cleanup
-    if(tmp_im != NULL) {
-      Image_free(tmp_im);
-    }
-
-    if(fp) {
-      fclose(fp);
-    }
+    if(tmp_im != NULL) 
+      {
+	Image_free(tmp_im);
+      }
+    
+    if(fp) 
+      {
+	fclose(fp);
+      }
     
     return im;
     
@@ -205,8 +201,9 @@ int Image_save(const char * filename, Image * image)
 {
     int err = FALSE; 
     FILE * fp = NULL;
-    uint8_t * buffer = NULL;    
+    //uint8_t * buffer = NULL;    
     size_t written = 0;
+    int size = image->width * image->height;
 
     // Attempt to open file for writing
     fp = fopen(filename, "wb");
@@ -215,12 +212,8 @@ int Image_save(const char * filename, Image * image)
 	return FALSE; // No file ==> out of here.
     }
 
-    // Number of bytes stored on each row
-    size_t bytes_per_row =  image->width;
-
     // Prepare the header
     ImageHeader header;
-    int size = header.width * header.height;
     header.width = image->width;
     header.height = image->height;
 
@@ -233,38 +226,21 @@ int Image_save(const char * filename, Image * image)
 	    err = TRUE;	
 	}
     }
-
-    if(!err) { // Before writing, we'll need a write buffer
-	buffer = malloc(size);
-	if(buffer == NULL) {
-	    fprintf(stderr, "Error: failed to allocate write buffer\n");
-	    err = TRUE;
-	} else {
-	    // not strictly necessary, we output file will be tidier.
-	    memset(buffer, 0, size); 
-	}
-    }
-
     if(!err) { // Write pixels	
-	uint8_t * read_ptr = image->data;
 	int i;
 	for (i = 0; i < size && !err; i++)
 	  {
-	    buffer[i] = read_ptr[i];
+	    written = fwrite (&image->data[i],sizeof(uint8_t),1,fp);
 	  }
-	written = fwrite(buffer, sizeof(uint8_t), bytes_per_row, fp);
-	/*if(written != bytes_per_row) {
-	  fprintf(stderr, "Failed to write pixel data to file\n");
-	  err = TRUE;
-	  }*/
     }
     
     
     // Cleanup
+    //free(buffer);
     if(fp)
-      {fclose(fp);}
-    free(buffer);
-    
+      {
+	fclose(fp);
+      }    
     return !err;
 }
 
