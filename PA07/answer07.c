@@ -1,4 +1,3 @@
- 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -66,13 +65,14 @@ Image * Image_load(const char * filename)
 
 	//Reading comment
 	n_bytes = header.comment_len;
-	tmp_im->comment = malloc(sizeof(char*)*n_bytes);
+	tmp_im->comment = malloc(sizeof(char)*n_bytes);
 	read = fread(tmp_im->comment,sizeof(char),n_bytes,fp);
-	printf("Comment is :%s\n ",tmp_im->comment);
+	printf("Comment is: %s\n ",tmp_im->comment);
 
 	// Handle image data
 	n_bytes = header.width * header.height;
 	tmp_im->data = malloc(n_bytes);
+	printf("Data size is %d\n",n_bytes);
 	if(tmp_im->data == NULL) 
 	  {
 	    fprintf(stderr, "Failed to allocate %zd bytes for image data\n",
@@ -204,11 +204,9 @@ static int checkValid(ImageHeader * header,const char * filename)
 int Image_save(const char * filename, Image * image)
 {
     int err = FALSE; 
-    FILE * fp = NULL;
-    //uint8_t * buffer = NULL;    
+    FILE * fp = NULL;   
     size_t written = 0;
-    int size = image->width * image->height;
-
+    int n_bytes;
     // Attempt to open file for writing
     fp = fopen(filename, "wb");
     if(fp == NULL) {
@@ -220,27 +218,47 @@ int Image_save(const char * filename, Image * image)
     ImageHeader header;
     header.width = image->width;
     header.height = image->height;
+    header.magic_number = ECE264_IMAGE_MAGIC_NUMBER;
+    header.comment_len = strlen(image->comment);
 
-    if(!err) {  // Write the header
+    if(!err) 
+      {  // Write the header
 	written = fwrite(&header, sizeof(ImageHeader), 1, fp);
 	if(written != 1) {
-	    fprintf(stderr, 
-		    "Error: only wrote %zd of %zd of file header to '%s'\n",
-		    written, sizeof(ImageHeader), filename);
-	    err = TRUE;	
+	  fprintf(stderr, 
+		  "Error: only wrote %zd of %zd of file header to '%s'\n",
+		  written, sizeof(ImageHeader), filename);
+	  err = TRUE;	
 	}
-    }
-    if(!err) { // Write pixels	
-	int i;
-	for (i = 0; i < size && !err; i++)
+      }
+   
+    if(!err)
+      { //Write Comments
+	n_bytes = header.comment_len;
+	char * comment;
+	comment = malloc(sizeof(char)*n_bytes);
+	comment = image->comment;
+	printf("Reading... Comment length is: %d\n",n_bytes);
+	written = fwrite(comment,sizeof(char),n_bytes,fp);
+	if(written != n_bytes)
 	  {
-	    written = fwrite (&image->data[i],sizeof(uint8_t),1,fp);
+	    printf("Fail to write data to file\n");
+	    err = TRUE;
 	  }
-    }
+      }
+
+    if(!err) 
+      { // Write pixels	
+	n_bytes = header.width * header.height;
+	uint8_t * data;
+	data = malloc(sizeof(uint8_t)*n_bytes);
+	data = image->data;
+	written = fwrite(data,sizeof(uint8_t),n_bytes,fp);
+      }
     
     
     // Cleanup
-    //free(buffer);
+   
     if(fp)
       {
 	fclose(fp);
