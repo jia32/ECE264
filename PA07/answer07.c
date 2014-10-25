@@ -80,7 +80,7 @@ Image * Image_load(const char * filename)
 	    err = TRUE;
 	  }
     }
-
+    /*
     if(!err) 
       { // Seek the start of the pixel data
 	if(fseek(fp,22, SEEK_SET) != 0) {
@@ -89,11 +89,15 @@ Image * Image_load(const char * filename)
 	  err = TRUE;
 	}
       }
-    
+    */
 
     if(!err) 
       { // Read pixel data
 	n_bytes = header.width* header.height;
+	tmp_im->data = malloc(sizeof(uint8_t)*n_bytes);
+	read = fread(tmp_im->data,sizeof(uint8_t),n_bytes,fp);
+
+	/*
 	uint8_t * raw = malloc(n_bytes);
 	if(raw == NULL) 
 	  {
@@ -119,9 +123,9 @@ Image * Image_load(const char * filename)
 	      }
 	    }
 	  }
-	free(raw);
+	  free(raw);*/
       }
-    
+	
     if(!err) 
       { // We should be at the end of the file now
 	uint8_t byte;
