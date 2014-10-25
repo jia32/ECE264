@@ -54,7 +54,6 @@ Image * Image_load(const char * filename)
       if(tmp_im == NULL) {
 	fprintf(stderr, "Failed to allocate im structure\n");
 	err = TRUE;
-	free(tmp_im);
       } 
     }
   
@@ -65,32 +64,59 @@ Image * Image_load(const char * filename)
 
 	//Reading comment
 	n_bytes = header.comment_len;
-	tmp_im->comment = malloc(sizeof(char)*n_bytes);
-	read = fread(tmp_im->comment,sizeof(char),n_bytes,fp);
-	/* Testing comments
+	tmp_im->comment = malloc(n_bytes);
+	if(tmp_im->comment == NULL)
+	  {
+	    printf("Fail to allocate memory for comment.\n");
+	    err = TRUE;
+	  }
+	else {
+	  read = fread(tmp_im->comment,sizeof(char),n_bytes,fp);
+	  /*testing comments
 	   printf("Loading Comments...\n");
-	printf("Comment is: %s\n",tmp_im->comment);
-	printf("Comment length is:%d\n",n_bytes);
-	printf("Comment ends as %s\n",tmp_im->comment[n_bytes]);
-	*/
-	// Handle image data
+	   printf("Comment is: %s\n",tmp_im->comment);
+	   printf("Comment length is:%d\n",n_bytes);
+	   printf("Comment ends as %s\n",tmp_im->comment[n_bytes-1]);
+	  */
+	  if (n_bytes != read)
+	    {
+	      printf("Only allocate %zd of %zd bytes comment\n",
+		     read, n_bytes);
+	      err = TRUE;
+	    }
+	  else if (tmp_im->comment[n_bytes - 1] != '\0')
+	    {
+	      printf("Error: comment has no null byte.\n");
+	      err = TRUE;
+	    }
+	  
+	}
+      
+	  // Handle image data
 	n_bytes = header.width * header.height;
 	tmp_im->data = malloc(n_bytes);
-	printf("Data size is %d\n",n_bytes);
+	//printf("Data size is %d\n",n_bytes);
 	if(tmp_im->data == NULL) 
 	  {
 	    fprintf(stderr, "Failed to allocate %zd bytes for image data\n",
 		    n_bytes);
 	    err = TRUE;
 	  }
-    }
-
+	
+      }
+    
     if(!err) 
       { // Read pixel data
 	n_bytes = header.width* header.height;
 	read = fread(tmp_im->data,sizeof(uint8_t),n_bytes,fp);
+	if(n_bytes != read)
+	  {
+	    printf("Only read %zd of %zd bytes of image data\n",
+		   read, n_bytes);
+	    err = TRUE;
+	  }
       }
-	
+    
     if(!err) 
       { // We should be at the end of the file now
 	uint8_t byte;
@@ -133,8 +159,7 @@ void Image_free(Image*image)
   free(image);
 }
 
-
-static int checkValid(ImageHeader * header,const char * filename)
+int checkValid(ImageHeader * header,const char * filename)
 {
   
     // Make sure the magic number is correct
@@ -237,6 +262,7 @@ int Image_save(const char * filename, Image * image)
       }    
     return !err;
 }
+
 
 void linearNormalization(int width, int height, uint8_t * intensity)
 {
