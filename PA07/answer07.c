@@ -67,8 +67,12 @@ Image * Image_load(const char * filename)
 	n_bytes = header.comment_len;
 	tmp_im->comment = malloc(sizeof(char)*n_bytes);
 	read = fread(tmp_im->comment,sizeof(char),n_bytes,fp);
-	printf("Comment is: %s\n ",tmp_im->comment);
-
+	/* Testing comments
+	   printf("Loading Comments...\n");
+	printf("Comment is: %s\n",tmp_im->comment);
+	printf("Comment length is:%d\n",n_bytes);
+	printf("Comment ends as %s\n",tmp_im->comment[n_bytes]);
+	*/
 	// Handle image data
 	n_bytes = header.width * header.height;
 	tmp_im->data = malloc(n_bytes);
@@ -80,50 +84,11 @@ Image * Image_load(const char * filename)
 	    err = TRUE;
 	  }
     }
-    /*
-    if(!err) 
-      { // Seek the start of the pixel data
-	if(fseek(fp,22, SEEK_SET) != 0) {
-	  fprintf(stderr, "Failed to seek %d, the data of the image data\n",
-		  22);
-	  err = TRUE;
-	}
-      }
-    */
 
     if(!err) 
       { // Read pixel data
 	n_bytes = header.width* header.height;
-	tmp_im->data = malloc(sizeof(uint8_t)*n_bytes);
 	read = fread(tmp_im->data,sizeof(uint8_t),n_bytes,fp);
-
-	/*
-	uint8_t * raw = malloc(n_bytes);
-	if(raw == NULL) 
-	  {
-	    fprintf(stderr, "Could not allocate %zd bytes of image data\n",
-		    n_bytes);
-	    err = TRUE;
-	  }
-	else 
-	  {
-	    read = fread(raw, sizeof(uint8_t), n_bytes, fp);
-	    if(n_bytes != read)
-	      {
-		fprintf(stderr, "Only read %zd of %zd bytes of image data\n", 
-			read, n_bytes);
-		err = TRUE;
-	      } 
-	  else 
-	    {
-	      int i;
-	      for(i = 0; i < n_bytes;i++)
-		{
-		  tmp_im->data[i] = raw[i];
-	      }
-	    }
-	  }
-	  free(raw);*/
       }
 	
     if(!err) 
@@ -146,6 +111,7 @@ Image * Image_load(const char * filename)
       }
     
     // Cleanup
+    
     if(tmp_im != NULL) 
       {
 	Image_free(tmp_im);
@@ -219,7 +185,7 @@ int Image_save(const char * filename, Image * image)
     header.width = image->width;
     header.height = image->height;
     header.magic_number = ECE264_IMAGE_MAGIC_NUMBER;
-    header.comment_len = strlen(image->comment);
+    header.comment_len = strlen(image->comment)+1;
 
     if(!err) 
       {  // Write the header
@@ -238,27 +204,33 @@ int Image_save(const char * filename, Image * image)
 	char * comment;
 	comment = malloc(sizeof(char)*n_bytes);
 	comment = image->comment;
-	printf("Reading... Comment length is: %d\n",n_bytes);
 	written = fwrite(comment,sizeof(char),n_bytes,fp);
+	/*Testing comments
+	  printf("Writing comment...\nComment is: %s\n",comment);
+	  printf("Comment length is %d\n",n_bytes);
+	  printf("Comment ends as %s\n",comment[n_bytes]);
+	*/
+	free(comment);
 	if(written != n_bytes)
 	  {
 	    printf("Fail to write data to file\n");
 	    err = TRUE;
 	  }
       }
-
+    
     if(!err) 
       { // Write pixels	
 	n_bytes = header.width * header.height;
 	uint8_t * data;
+	printf("Writing %d bytes for pixel data\n",n_bytes);
 	data = malloc(sizeof(uint8_t)*n_bytes);
 	data = image->data;
 	written = fwrite(data,sizeof(uint8_t),n_bytes,fp);
+	free(data);
       }
     
     
     // Cleanup
-   
     if(fp)
       {
 	fclose(fp);
