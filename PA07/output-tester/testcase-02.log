@@ -16,7 +16,7 @@ Printing BMP header information:
 Success.
 Applying normalization
 Writing out 'student-out-01_02-cat-chess.bmp' in .bmp format
-   Memory errors detected.
-   Valgrind log saved in output-tester/testcase-02.memcheck.log.
 Comparing student-out-01_02-cat-chess.bmp with expected output: 
 ./diff-plus student-out-01_02-cat-chess.bmp images/bmps/02-cat-chess.bmp
+Match.
+Testcase passed.

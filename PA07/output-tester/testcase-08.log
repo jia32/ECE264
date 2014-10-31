@@ -15,7 +15,8 @@ Printing BMP header information:
   bits: 24
 Success.
 Writing out 'student-out-07_03-hawkes-bay-NZ.ee264' in .ee264 format
-   Memory errors detected.
-   Valgrind log saved in output-tester/testcase-08.memcheck.log.
+Writing 60000 bytes for pixel data
 Comparing student-out-07_03-hawkes-bay-NZ.ee264 with expected output: 
 ./diff-plus student-out-07_03-hawkes-bay-NZ.ee264 images/03-hawkes-bay-NZ.ee264
+Match.
+Testcase passed.

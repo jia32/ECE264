@@ -6,8 +6,6 @@
 
 #include "answer07.h"
 
-#include "answer07.c"
-
 void print_usage(char * argv0)
 {
     printf("\n"
@@ -45,20 +43,20 @@ int main(int argc, char * * argv)
     const char * out_filename = argv[2];
 
     // Read the file
-    Image * im = Image_loadbmp(in_filename);
+    Image * im = Image_load(in_filename);
     if(im == NULL) {
 	fprintf(stderr, "Error: failed to read '%s'\n", in_filename);
 	return EXIT_FAILURE;
     }
-
+    /*
     // Invert pixel intensity
     int n_pixels = im->width * im->height;
     int ind;
     for(ind = 0; ind < n_pixels; ++ind)
 	im->data[ind] = 255 - im->data[ind];
-
+    */
     // Write out a new file
-    if(!Image_savebmp(out_filename, im)) {
+    if(!Image_save(out_filename, im)) {
 	fprintf(stderr, "Error attempting to write '%s'\n", out_filename);
 	ret = EXIT_FAILURE;
     }

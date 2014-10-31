@@ -15,7 +15,8 @@ Printing BMP header information:
   bits: 24
 Success.
 Writing out 'student-out-05_01-smile.ee264' in .ee264 format
-   Memory errors detected.
-   Valgrind log saved in output-tester/testcase-06.memcheck.log.
+Writing 66976 bytes for pixel data
 Comparing student-out-05_01-smile.ee264 with expected output: 
 ./diff-plus student-out-05_01-smile.ee264 images/01-smile.ee264
+Match.
+Testcase passed.
