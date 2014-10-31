@@ -13,6 +13,7 @@ typedef struct ListNode_st
 */
 List * List_createNode(const char * str)
 {
+  
   List *list = malloc(sizeof(List));
   list->str = strdup(str);
   list->next = NULL;
@@ -21,26 +22,29 @@ List * List_createNode(const char * str)
 
 void List_destroy(List * list)
 {
-  if(list != NULL)
+  List * tmp;
+  while(list != NULL)
     {
-      if(list->str !=NULL)
-	{
-	  free(list->str);
-	}      
-      free(list);
+      tmp = list;
+      list = list->next;
+      //printf("Now free %s\n",tmp->str);
+      free(tmp->str);
+      free(tmp);
     }
 }
-/*
+
+
 int List_length(List * list)
 {
-  if (list = NULL)
+  int count = 0;
+  while (list != NULL)
     {
-      return 0;
+      list = list->next;
+      count++;
     }
-
-
+  return count;
 }
-*/
+
 /*
 List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))

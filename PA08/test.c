@@ -9,12 +9,13 @@
 #define FALSE 0
 int tests_List_createNode(int);
 int tests_List_destroyNode(int);
-
+int tests_List_length(int);
 int main(int argc, char * argv[])
 {
   int i = (int)(argv[1][0] - '0');
-  int j =  tests_List_createNode(i);
-  int k = tests_List_destroyNode(i);
-  printf("create %d\ndestroy %d",j,k);
+  //tests_List_createNode(i);
+  //tests_List_destroyNode(i);
+  int len = tests_List_length(i);
+  //printf("length of linked list is %d\n",len);
   return EXIT_SUCCESS;
 }

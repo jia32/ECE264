@@ -46,14 +46,13 @@ int tests_List_createNode(int test_number)
     }
 
     // Cleanup
-    List_destroy(list);
-    /*
+        
     if(list) {
 	if(list->str && list->str != s)
 	    free(list->str);
 	free(list);
     }
-    */
+    
     return success;
 }
 
