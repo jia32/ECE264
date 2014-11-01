@@ -37,13 +37,38 @@ int List_length(List * list)
   return count;
 }
 
-/*
+
 List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
 {
+  
+  List * result;
+  while ((rhs != NULL) && (lhs != NULL))
+    //while (List_length(result) != (List_length(lhs) + List_length(rhs)))
+    {
+      if (compare(lhs->str,rhs->str)<0) //left < right
+	{
+	  result = lhs;
+	  result = result->next;
+	  lhs = lhs->next;
+	}
+      if (compare(lhs->str,rhs->str)>0)//left > right
+	{
+	  result = rhs;
+	  result = result->next;
+	  rhs = rhs->next;
+	}
+      if (compare(lhs->str,rhs->str)=0)//left = right
+        {
+	  result = lhs;
+	  result = result->next;
+	  result = lhs;
+	  result = result;
+	  lhs = lhs->next;
+	  rhs = rhs->next;
+        }
+    }
 }
-*/
-
 
 List * List_sort(List * list, int (*compar)(const char *, const char*))
 {
@@ -53,19 +78,13 @@ List * List_sort(List * list, int (*compar)(const char *, const char*))
       return list;
     }
   List *right = List_half(list,len/2);
-  List *tmp;
-  list = tmp->next;
-  tmp->next = right;
-  while ((list! = NULL) && (right != NULL))
-    {
-      if (compar(list->str,right,str) < 0)
-	{
-	  List_sort(
-		    }
-}
-      
+  List_sort(list,compar);
+  List_sort(right,compar);  
+  List * result = List_merge(list,right,compar);
+  return result;
+}    
 
-int compar(const char*a,const char*b)
+int compar(const char * a,const char * b)
 {
   return (strcmp(a,b));
 }
