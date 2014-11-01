@@ -4,16 +4,8 @@
 #include <libgen.h>
 #include "answer08.h"
 
-/*
-typedef struct ListNode_st
-{
-    char * str;
-    struct ListNode_st * next;
-} List;
-*/
 List * List_createNode(const char * str)
 {
-  
   List *list = malloc(sizeof(List));
   list->str = strdup(str);
   list->next = NULL;
@@ -50,8 +42,43 @@ List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
 {
 }
+*/
+
 
 List * List_sort(List * list, int (*compar)(const char *, const char*))
 {
+  int len = List_length(list);
+  if ((len == 0)||(len == 1))
+    {
+      return list;
+    }
+  List *right = List_half(list,len/2);
+  List *tmp;
+  list = tmp->next;
+  tmp->next = right;
+  while ((list! = NULL) && (right != NULL))
+    {
+      if (compar(list->str,right,str) < 0)
+	{
+	  List_sort(
+		    }
 }
-*/
+      
+
+int compar(const char*a,const char*b)
+{
+  return (strcmp(a,b));
+}
+
+List *List_half(List *list, int len)
+{
+  List *left = list;
+  while (len > 1)
+    {
+      left = left->next;
+      len--;
+    }
+  List *right = left->next;
+  left->next = NULL;
+  return right;
+}

@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -7,7 +6,7 @@
 
 #define TRUE 1
 #define FALSE 0
-
+List * List_half(List*,int);
 int tests_List_createNode(int test_number)
 {
 
@@ -44,7 +43,10 @@ int tests_List_createNode(int test_number)
     } else {
 	success = TRUE;
     }
-
+    
+    int len = List_length(list);
+    List * q = List_half(list,len/2);
+    printf("%s\n",q->str);
     // Cleanup
         
     if(list) {

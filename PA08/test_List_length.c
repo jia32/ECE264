@@ -8,7 +8,7 @@
 #define BUFLEN 256
 #define TRUE 1
 #define FALSE 0
-
+List* List_half(List*,int);
 int tests_List_length(int test_number)
 {
     int n_tests = 7;
@@ -50,9 +50,22 @@ int tests_List_length(int test_number)
 	ret = FALSE;
     }
 
+    List * q = List_half(list,len/2);
+    printf("Testing: List_half(list):\n");
+    printf("Left hand side is:\n");
+    while (list != NULL)
+      {
+	printf("\"%s\" ==> ",list->str);
+	list = list->next;
+      }
+    printf("NULL\nRight hand side is:\n");
+    while(q != NULL) {
+      printf("\"%s\" ==> ", q->str);
+      q = q->next;
+    }    
+    printf("NULL");
     // Cleanup
     List_destroy(list);
-
     return ret;
 }
 
