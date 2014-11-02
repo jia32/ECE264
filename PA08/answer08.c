@@ -43,8 +43,10 @@ List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
 {  
   List * head = NULL;
+  List * tmp = NULL;
   List * tail = NULL;
   int ct = 0;
+  printf("---Getting Started----\n");    
   while ((rhs != NULL) || (lhs != NULL))
     {
       if (rhs == NULL)
@@ -62,28 +64,34 @@ List * List_merge(List * lhs, List * rhs,
       else if (compar(lhs->str,rhs->str) < 0) //left < right
 	{
 	  tail = lhs;
-	  lhs = lhs->next;
 	  printf("lhs: %s is smaller than rhs: %s now\n",lhs->str,rhs->str);
+	  lhs = lhs->next;
 	}
       else //when right >= left 
 	{
 	  tail = rhs;
-	  rhs = rhs->next;
 	  printf("lhs: %s >= rhs: %s now\n",lhs->str,rhs->str);
+	  rhs = rhs->next;
        }
       if (ct == 0)
 	{
 	  head = tail;
-	  printf("head is %s\n",head->str);
+	  tmp = head;
+	  printf("head is '/%s'/\n",head->tmp);
 	}
       if (tail != NULL)
 	{
-	  printf("==> %s",tail->str);
+	  if (ct != 0)
+	    {
+	      tmp = tmp->next;
+	      tmp = tail;
+	      printf("list is '/%s'/\n",tmp->str);
+	    }
 	  tail = tail->next;
 	}
       ct++;
+      printf("-------%dth round-------\n",ct);
     }
-  printf("NULL\n");
   return head;
 }
 
