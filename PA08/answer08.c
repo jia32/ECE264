@@ -4,6 +4,7 @@
 #include <libgen.h>
 #include "answer08.h"
 
+List * List_half(List*,int);
 List * List_createNode(const char * str)
 {
   List *list = malloc(sizeof(List));
@@ -46,29 +47,40 @@ List * List_merge(List * lhs, List * rhs,
   while ((rhs != NULL) && (lhs != NULL))
     //while (List_length(result) != (List_length(lhs) + List_length(rhs)))
     {
-      if (compare(lhs->str,rhs->str)<0) //left < right
+      if (compar < 0) //left < right
 	{
 	  result = lhs;
 	  result = result->next;
 	  lhs = lhs->next;
 	}
-      if (compare(lhs->str,rhs->str)>0)//left > right
+      if (compar > 0)//left > right
 	{
 	  result = rhs;
 	  result = result->next;
 	  rhs = rhs->next;
 	}
-      if (compare(lhs->str,rhs->str)=0)//left = right
+      if (compar == 0)//left = right
         {
 	  result = lhs;
 	  result = result->next;
 	  result = lhs;
-	  result = result;
+	  result = result->next;
 	  lhs = lhs->next;
 	  rhs = rhs->next;
         }
     }
+  if (lhs == NULL);
+  {
+    result = rhs;
+  }
+  if (rhs == NULL);
+  {
+    result = lhs;
+  }
+  result->next = NULL;
+  return result;
 }
+
 
 List * List_sort(List * list, int (*compar)(const char *, const char*))
 {
@@ -86,7 +98,7 @@ List * List_sort(List * list, int (*compar)(const char *, const char*))
 
 int compar(const char * a,const char * b)
 {
-  return (strcmp(a,b));
+  return (strcmp(*(const char *a),*(const char *b));
 }
 
 List *List_half(List *list, int len)
