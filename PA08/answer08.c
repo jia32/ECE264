@@ -45,6 +45,7 @@ List * List_merge(List * lhs, List * rhs,
   List * result;
   List * next;
   List * tail;
+  result = next;
   while ((rhs != NULL) || (lhs != NULL))
     //while (List_length(result) != (List_length(lhs) + List_length(rhs)))
     {
@@ -68,15 +69,10 @@ List * List_merge(List * lhs, List * rhs,
 	  next = rhs;
 	  rhs = rhs->next;
        }
-      if (tail != NULL)
+      if (next != NULL)
 	{
-	  result = next;
+	  next = next->next;
 	}
-      else 
-	{
-	  tail->next = next;
-	}
-      tail = next;
     }
   return result;
 }
