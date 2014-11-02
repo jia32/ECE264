@@ -41,43 +41,33 @@ int List_length(List * list)
 
 List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
-{
-  
+{  
   List * result;
-  while ((rhs != NULL) && (lhs != NULL))
+  while ((rhs != NULL) || (lhs != NULL))
     //while (List_length(result) != (List_length(lhs) + List_length(rhs)))
     {
-      if (compar < 0) //left < right
+      if (rhs == 0)
 	{
 	  result = lhs;
-	  result = result->next;
 	  lhs = lhs->next;
 	}
-      if (compar > 0)//left > right
+      else if (lhs == 0)
 	{
 	  result = rhs;
-	  result = result->next;
 	  rhs = rhs->next;
 	}
-      if (compar == 0)//left = right
-        {
+      else if (compar(lhs->str,rhs->str) < 0) //left < right
+	{
 	  result = lhs;
-	  result = result->next;
-	  result = lhs;
-	  result = result->next;
 	  lhs = lhs->next;
+	}
+      else //when right >= left 
+	{
+	  result = rhs;
 	  rhs = rhs->next;
-        }
+       }
+      result = result->next;
     }
-  if (lhs == NULL);
-  {
-    result = rhs;
-  }
-  if (rhs == NULL);
-  {
-    result = lhs;
-  }
-  result->next = NULL;
   return result;
 }
 
@@ -90,8 +80,8 @@ List * List_sort(List * list, int (*compar)(const char *, const char*))
       return list;
     }
   List *right = List_half(list,len/2);
-  List_sort(list,compar);
-  List_sort(right,compar);  
+  list =  List_sort(list,compar);
+  right = List_sort(right,compar);  
   List * result = List_merge(list,right,compar);
   return result;
 }    
