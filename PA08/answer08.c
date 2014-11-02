@@ -43,30 +43,40 @@ List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
 {  
   List * result;
+  List * next;
+  List * tail;
   while ((rhs != NULL) || (lhs != NULL))
     //while (List_length(result) != (List_length(lhs) + List_length(rhs)))
     {
       if (rhs == 0)
 	{
-	  result = lhs;
+	  next = lhs;
 	  lhs = lhs->next;
 	}
       else if (lhs == 0)
 	{
-	  result = rhs;
+	  next = rhs;
 	  rhs = rhs->next;
 	}
       else if (compar(lhs->str,rhs->str) < 0) //left < right
 	{
-	  result = lhs;
+	  next = lhs;
 	  lhs = lhs->next;
 	}
       else //when right >= left 
 	{
-	  result = rhs;
+	  next = rhs;
 	  rhs = rhs->next;
        }
-      result = result->next;
+      if (tail != NULL)
+	{
+	  result = next;
+	}
+      else 
+	{
+	  tail->next = next;
+	}
+      tail = next;
     }
   return result;
 }
