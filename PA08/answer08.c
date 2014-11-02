@@ -3,13 +3,13 @@
 #include <string.h>
 #include <libgen.h>
 #include "answer08.h"
-
 List * List_half(List*,int);
+
 List * List_createNode(const char * str)
 {
   List *list = malloc(sizeof(List));
-  list->str = strdup(str);
-  list->next = NULL;
+  list->str = strdup(str);//strdup malloc and copy the string
+  list->next = NULL;//make sure list->next is null
   return list;
 }
 
@@ -30,10 +30,10 @@ void List_destroy(List * list)
 int List_length(List * list)
 {
   int count = 0;
-  while (list != NULL)
+  while (list != NULL)//terminate when reach NULL
     {
-      list = list->next;
-      count++;
+      list = list->next;//move to next node
+      count++;//count the move
     }
   return count;
 }
@@ -42,55 +42,57 @@ int List_length(List * list)
 List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
 {  
-  List * head = NULL;
-  List * tmp = NULL;
-  List * tail = NULL;
+  List * head = NULL;//head of merged list
+  List * tmp = NULL;//mergerd list
+  List * tail = NULL;//tail of merged list
   int ct = 0;
-  printf("---Getting Started----\n");    
+  //printf("---Getting Started----\n");    
   while ((rhs != NULL) || (lhs != NULL))
+    //when lhs and rhs are both null
+    // merge is done
     {
-      if (rhs == NULL)
+      if (rhs == NULL)//pass lhs while rhs is null
 	{
 	  tail = lhs;
 	  lhs = lhs->next;
-	  printf("rhs is NULL\n");
+	  //printf("rhs is NULL\n");
 	}
-      else if (lhs == NULL)
+      else if (lhs == NULL)//pass rhs while lhs is null
 	{
 	  tail = rhs;
 	  rhs = rhs->next;
-	  printf("lhs is NULL\n");
+	  //printf("lhs is NULL\n");
 	}
       else if (compar(lhs->str,rhs->str) < 0) //left < right
 	{
 	  tail = lhs;
-	  printf("lhs: %s is smaller than rhs: %s now\n",lhs->str,rhs->str);
+	  //printf("lhs: %s is smaller than rhs: %s now\n",lhs->str,rhs->str);
 	  lhs = lhs->next;
 	}
       else //when right >= left 
 	{
 	  tail = rhs;
-	  printf("lhs: %s >= rhs: %s now\n",lhs->str,rhs->str);
+	  //printf("lhs: %s >= rhs: %s now\n",lhs->str,rhs->str);
 	  rhs = rhs->next;
        }
-      if (ct == 0)
+      if (ct == 0)//the first node is head
 	{
 	  head = tail;
 	  tmp = head;
-	  printf("head is '/%s'/\n",head->tmp);
+	  //printf("head is '/%s'(%s)/\n",head->str,tmp->str);
 	}
       if (tail != NULL)
 	{
 	  if (ct != 0)
 	    {
+	      tmp->next = tail;//put tail at the end of the list
+	      //printf("list is '/%s'/\n",tmp->str);
 	      tmp = tmp->next;
-	      tmp = tail;
-	      printf("list is '/%s'/\n",tmp->str);
 	    }
 	  tail = tail->next;
 	}
       ct++;
-      printf("-------%dth round-------\n",ct);
+      //printf("-------%dth round-------\n",ct);
     }
   return head;
 }
@@ -103,10 +105,10 @@ List * List_sort(List * list, int (*compar)(const char *, const char*))
     {
       return list;
     }
-  List *right = List_half(list,len/2);
+  List *right = List_half(list,len/2);//split list into 2 part, list and right
   list =  List_sort(list,compar);
-  right = List_sort(right,compar);  
-  List * result = List_merge(list,right,compar);
+  right = List_sort(right,compar);//sort each part recursively  
+  List * result = List_merge(list,right,compar);//merge small parts
   return result;
 }    
 
@@ -121,9 +123,9 @@ List *List_half(List *list, int len)
   while (len > 1)
     {
       left = left->next;
-      len--;
+      len--;//move to the middle
     }
-  List *right = left->next;
-  left->next = NULL;
+  List *right = left->next;//the right part starts at the end of left part
+  left->next = NULL;//Mark the end of left part
   return right;
 }
