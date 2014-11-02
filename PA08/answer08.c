@@ -88,7 +88,7 @@ List * List_sort(List * list, int (*compar)(const char *, const char*))
 
 int compar(const char * a,const char * b)
 {
-  return (strcmp(*(const char *a),*(const char *b)));
+  return (strcmp(a,b));
 }
 
 List *List_half(List *list, int len)
