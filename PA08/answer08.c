@@ -42,8 +42,8 @@ int List_length(List * list)
 List * List_merge(List * lhs, List * rhs,
 		  int (*compar)(const char *, const char*))
 {  
-  List * head;
-  List * tail;
+  List * head = NULL;
+  List * tail = NULL;
   int ct = 0;
   while ((rhs != NULL) || (lhs != NULL))
     {
@@ -51,32 +51,39 @@ List * List_merge(List * lhs, List * rhs,
 	{
 	  tail = lhs;
 	  lhs = lhs->next;
+	  printf("rhs is NULL\n");
 	}
       else if (lhs == NULL)
 	{
 	  tail = rhs;
 	  rhs = rhs->next;
+	  printf("lhs is NULL\n");
 	}
       else if (compar(lhs->str,rhs->str) < 0) //left < right
 	{
 	  tail = lhs;
 	  lhs = lhs->next;
+	  printf("lhs: %s is smaller than rhs: %s now\n",lhs->str,rhs->str);
 	}
       else //when right >= left 
 	{
 	  tail = rhs;
 	  rhs = rhs->next;
+	  printf("lhs: %s >= rhs: %s now\n",lhs->str,rhs->str);
        }
       if (ct == 0)
 	{
 	  head = tail;
+	  printf("head is %s\n",head->str);
 	}
       if (tail != NULL)
 	{
+	  printf("==> %s",tail->str);
 	  tail = tail->next;
 	}
       ct++;
     }
+  printf("NULL\n");
   return head;
 }
 
