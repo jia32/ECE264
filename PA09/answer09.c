@@ -7,13 +7,13 @@
 
 BusinessNode * create_node(char * stars, char * name, char * address)
 {
-  BusinessNode *new0;
+  BusinessNode *new;
   new = malloc(sizeof(BusinessNode));
-  new->name = malloc(sizeof(char)*name);
+  new->name = malloc(sizeof(char)*(1+strlen(name)));
   strcpy(new->name,name);
-  new->stars = malloc(sizeof(char)*stars);
+  new->stars = malloc(sizeof(char)*(1+strlen(stars)));
   strcpy(new->stars,stars);
-  new->address = malloc(sizeof(char)*address);
+  new->address = malloc(sizeof(char)*(1+strlen(address)));
   strcpy(new->address,address);
   new->left = NULL;
   new->right = NULL;
@@ -22,33 +22,62 @@ BusinessNode * create_node(char * stars, char * name, char * address)
 
 BusinessNode * tree_insert(BusinessNode * node, BusinessNode * root)
 {
-  if (node == NULL)
+  if (root == NULL)
     {
-      return create_node(root->stars,root->name,root->address);
+      return create_node(node->stars,node->name,node->address);
     }
-  int compar = strcmp(node->name,root->name);
+  int compar = strcmp(root->name,node->name);
   if (compar <= 0)
     {
-      node->left=tree_insert(node->left,root);
+      root->left=tree_insert(root->left,node);
     }
   if (compar > 0)
     {
-      node->right = tree_insert(node->right,root);
+      root->right = tree_insert(root->right,node);
     }
-  return node;
+  return root;
 }
 
+/*
 BusinessNode * load_tree_from_file(char * filename)
 {
   
 }
-/*
+
 BusinessNode *
 tree_search_name(char * name, BusinessNode * root);
 void
 print_node(BusinessNode * node);
-void
-print_tree(BusinessNode * tree);
-void
-destroy_tree(BusinessNode * root);
 */
+
+void print_tree(BusinessNode * tree)
+{
+  if(tree == NULL)
+    {
+      return;
+    }
+  printf("name is %s\n", tree->name);
+  printf("stars is %s\n",tree->stars);
+  printf("address is %s\n",tree->address);
+  printf("-------------------\n");
+  print_tree(tree->left);
+  print_tree(tree->right);
+  return;
+}
+
+
+void destroy_tree(BusinessNode * root)
+{
+  printf("---Destroying %s---\n",root->name);
+  printf("next is %s\n",root->left->name);
+  
+  while (root != NULL);
+  {			
+    destroy_tree(root->left);
+    destroy_tree(root->right);
+    free(root);
+    return;
+  }
+  return;
+}
+

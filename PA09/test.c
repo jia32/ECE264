@@ -6,10 +6,11 @@
 
 int main(int argc, char ** argv)
 {
-  BusinessNode * root = create_node("5.0", "Wiley", "107 Union Street");
-  root->left = create_node("3.5", "Earhart","205 MacArthur Drive");
-  root ->right = create_node("4.0", "Hillenbrand", " 108 MacArthur Drive");
-  root->left->right = create_node("1.5","Ford","89 Salisbury Street");
+  BusinessNode * root = create_node("5.0", "root", "1 Union Street");
+  root->left = create_node("3.5", "left","205 MacArthur Drive");
+  root->right = create_node("4.0", "right", " 108 MacArthur Drive");
+  root->left->right = create_node("1.5","left->right","89 Salisbury Street");
   print_tree(root);
+  destroy_tree(root);
   return EXIT_SUCCESS;
 }
