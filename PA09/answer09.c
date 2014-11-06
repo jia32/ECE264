@@ -46,9 +46,13 @@ BusinessNode * load_tree_from_file(char * filename)
 
 BusinessNode *
 tree_search_name(char * name, BusinessNode * root);
-void
-print_node(BusinessNode * node);
 */
+
+void print_node(BusinessNode * node)
+{
+  
+}
+
 
 void print_tree(BusinessNode * tree)
 {
@@ -68,16 +72,20 @@ void print_tree(BusinessNode * tree)
 
 void destroy_tree(BusinessNode * root)
 {
-  printf("---Destroying %s---\n",root->name);
-  printf("next is %s\n",root->left->name);
-  
-  while (root != NULL);
-  {			
-    destroy_tree(root->left);
-    destroy_tree(root->right);
-    free(root);
+  //printf("---Destroying %s---\n",root->name);
+  //printf("next is %s\n",root->left->name);
+  //printf("if %s is NULL: %d\n",root->name, (root==NULL));
+  if (root==NULL)
+  {
+    printf("Reaching to an end.\n");
     return;
   }
+  destroy_tree(root->left);
+  destroy_tree(root->right);
+  free(root->name);
+  free(root->stars);
+  free(root->address);
+  free(root);
   return;
 }
 
