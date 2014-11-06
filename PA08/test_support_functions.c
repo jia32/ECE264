@@ -1,3 +1,7 @@
+#include <stdlib.c>
+#include <stdio.h>
+#include <string.h>
+#include "answer08.h"
 
 #define TRUE 1
 #define FALSE 0

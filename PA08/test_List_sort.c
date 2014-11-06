@@ -24,7 +24,7 @@ static int test_sort(List * list, int (*compar)(const char *, const char *))
     printf("\n");
 
     // Check that the student doesn't reallocate nodes... store list pointers
-    int len = List_length_sol(list);
+    int len = List_length(list);
     List * * nodeArr = malloc(len * sizeof(List *));
     int ind = 0;
     List * node = NULL;
@@ -35,7 +35,7 @@ static int test_sort(List * list, int (*compar)(const char *, const char *))
     }
 
     // Clone lhs, rhs, and get the solution
-    List * solution = List_sort_sol(List_clone(list), compar);
+    List * solution = List_sort(List_clone(list), compar);
 
     // Run the students code
     List * sorted = List_sort(list, compar);
@@ -48,7 +48,7 @@ static int test_sort(List * list, int (*compar)(const char *, const char *))
     printf("\n");
 
     // Are we the correct length?
-    int sorted_len = List_length_sol(sorted);
+    int sorted_len = List_length(sorted);
     if(sorted_len != len) {
 	printf("Error: sorted solution has length %d, but it should be %d\n",
 	       sorted_len, len);
@@ -79,8 +79,8 @@ static int test_sort(List * list, int (*compar)(const char *, const char *))
 
     // Cleanup memory
     free(nodeArr);
-    List_destroy_sol(solution);
-    List_destroy_sol(sorted);
+    List_destroy(solution);
+    List_destroy(sorted);
     return success;
 }
 
