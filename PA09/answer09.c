@@ -41,7 +41,45 @@ BusinessNode * tree_insert(BusinessNode * node, BusinessNode * root)
 
 BusinessNode * load_tree_from_file(char * filename)
 {
+  FILE *fp = NULL;
+  fp = fopen(filename,"rb");
+  if (fp == NULL)//check valid
+    {  
+      printf("File error\n");
+      return NULL;
+    }
+  fseek(fp,0,SEEK_END);
+  long int size = ftell(fp);//get the size of the file
+  fseek(fp,0,SEEK_SET);//get back to beginning
+  char * buffer;
+  buffer = malloc(sizeof(char)*(size+1));
+  fread(buffer,sizeof(char),size,fp);//read all the file
   
+  char * stars;
+  char * name;
+  char * address;
+  char * s1 = "\t";
+  char * s2 = "\n";
+  BusinessNode * root;
+  BusinessNode * node;
+  stars = strtok(buffer,s1);
+  name = strtok(buffer,s1);
+  address = strtok(buffer,s2);
+  //create root;
+  root = create_node(stars,name,address);
+  //keep creating node until no "\t" is found
+  stars = strtok(buffer,s1);
+  while (stars != NULL)
+    {
+      name = strtok(buffer,s1);
+      address = strtok(buffer,s2);
+      node = create_node(buffer,name,address);
+      root = tree_insert(node,root);
+      stars = strtok(buffer,s1);
+    }
+  free(buffer);
+  fclose(fp);
+  return root;
 }
 
 
