@@ -29,28 +29,45 @@ BusinessNode * tree_insert(BusinessNode * node, BusinessNode * root)
   int compar = strcmp(root->name,node->name);
   if (compar <= 0)
     {
-      root->left=tree_insert(root->left,node);
+      root->left=tree_insert(node,root->left);
     }
   if (compar > 0)
     {
-      root->right = tree_insert(root->right,node);
+      root->right = tree_insert(node,root->right);
     }
   return root;
 }
 
-/*
+
 BusinessNode * load_tree_from_file(char * filename)
 {
   
 }
 
-BusinessNode *
-tree_search_name(char * name, BusinessNode * root);
-*/
+
+BusinessNode * tree_search_name(char * name, BusinessNode * root)
+{
+  if(root == NULL)
+    {
+      return NULL;
+    }
+  if (strcmp(root->name,name) == 0)
+    {
+      return root;
+    }
+  tree_search_name(name,root->left);
+  tree_search_name(name,root->left);
+  return NULL;
+}
+
 
 void print_node(BusinessNode * node)
 {
-  
+  printf("\n%s\n",node->name);
+  printf("========\n");
+  printf("Stars:\n  %s\n",node->stars);
+  printf("Address:\n  %s\n",node->address);
+  return;
 }
 
 
@@ -60,10 +77,7 @@ void print_tree(BusinessNode * tree)
     {
       return;
     }
-  printf("name is %s\n", tree->name);
-  printf("stars is %s\n",tree->stars);
-  printf("address is %s\n",tree->address);
-  printf("-------------------\n");
+  print_node(tree);
   print_tree(tree->left);
   print_tree(tree->right);
   return;
@@ -72,12 +86,9 @@ void print_tree(BusinessNode * tree)
 
 void destroy_tree(BusinessNode * root)
 {
-  //printf("---Destroying %s---\n",root->name);
-  //printf("next is %s\n",root->left->name);
-  //printf("if %s is NULL: %d\n",root->name, (root==NULL));
   if (root==NULL)
   {
-    printf("Reaching to an end.\n");
+    //printf("Reaching to an end.\n");
     return;
   }
   destroy_tree(root->left);
