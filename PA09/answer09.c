@@ -9,12 +9,9 @@ BusinessNode * create_node(char * stars, char * name, char * address)
 {
   BusinessNode *new;
   new = malloc(sizeof(BusinessNode));
-  new->name = malloc(sizeof(char)*(1+strlen(name)));
-  strcpy(new->name,name);
-  new->stars = malloc(sizeof(char)*(1+strlen(stars)));
-  strcpy(new->stars,stars);
-  new->address = malloc(sizeof(char)*(1+strlen(address)));
-  strcpy(new->address,address);
+  new->name = name;
+  new->stars = stars;
+  new->address = address;
   new->left = NULL;
   new->right = NULL;
   return new;
@@ -24,7 +21,7 @@ BusinessNode * tree_insert(BusinessNode * node, BusinessNode * root)
 {
   if (root == NULL)
     {
-      return create_node(node->stars,node->name,node->address);
+      return create_node(strdup(root->stars),strdup(node->name),strdup(node->address));
     }
   int compar = strcmp(root->name,node->name);
   if (compar <= 0)
@@ -85,22 +82,44 @@ BusinessNode * load_tree_from_file(char * filename)
 
 BusinessNode * tree_search_name(char * name, BusinessNode * root)
 {
-  if(root == NULL)
+  //printf("name: %s\n",root->name);
+  BusinessNode * node = NULL;
+  if (root == NULL)
+    return NULL;
+  else
     {
-      return NULL;
-    }
-  if (strcmp(root->name,name) == 0)
-    {
-      return root;
-    }
-  tree_search_name(name,root->left);
-  tree_search_name(name,root->left);
+      int compar = strcmp(root->name, name);
+      if (compar == 0)
+	{
+	  //printf("Got it: %s\n",root->name);
+	  return root;
+	}
+      node = tree_search_name(name,root->right);
+      if (node != NULL)
+	{
+	  return node;
+	}
+      //printf("nothing on the right\n");
+      
+      node = tree_search_name(name,root->left);
+      if (node != NULL)
+	{
+	  return node;
+	}
+      //printf("nothing on the left\n");
+    } 
+  //printf("Nope nothing\n");
   return NULL;
 }
 
 
 void print_node(BusinessNode * node)
 {
+  if (node == NULL)
+    {
+      printf("NULL node\n");
+      return;
+    }
   printf("\n%s\n",node->name);
   printf("========\n");
   printf("Stars:\n  %s\n",node->stars);
