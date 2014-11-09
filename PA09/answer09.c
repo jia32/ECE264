@@ -9,73 +9,72 @@ BusinessNode * create_node(char * stars, char * name, char * address)
 {
   BusinessNode *new;
   new = malloc(sizeof(BusinessNode));
-  new->name = name;
-  new->stars = stars;
-  new->address = address;
-  new->left = NULL;
+  new->name =  name;
+  new->stars = stars; 
+  new->address = address; 
+  new->left = NULL; 
   new->right = NULL;
-  return new;
+  return new; 
 }
 
-BusinessNode * tree_insert(BusinessNode * node, BusinessNode * root)
-{
-  if (root == NULL)
+
+BusinessNode * tree_insert(BusinessNode * node, BusinessNode * root) 
+{ 
+  if (node == NULL) 
+    { 
+      return root; 
+    } 
+  if (root == NULL) 
     {
-      return create_node(strdup(root->stars),strdup(node->name),strdup(node->address));
+      return node;
     }
-  int compar = strcmp(root->name,node->name);
-  if (compar <= 0)
+  else
     {
-      root->left=tree_insert(node,root->left);
-    }
-  if (compar > 0)
-    {
-      root->right = tree_insert(node,root->right);
+      int compar = strcmp(node->name,root->name);
+      if (compar <= 0)
+	{       
+	  root->left=tree_insert(node,root->left); 
+	} 
+      else if (compar > 0)
+	 { 
+	   root->right = tree_insert(node,root->right);
+	 }
     }
   return root;
 }
 
-
-BusinessNode * load_tree_from_file(char * filename)
-{
-  FILE *fp = NULL;
-  fp = fopen(filename,"rb");
+BusinessNode * load_tree_from_file(char * filename) 
+{ 
+  FILE *fp = NULL; 
+  fp = fopen(filename,"rb"); 
   if (fp == NULL)//check valid
-    {  
-      printf("File error\n");
-      return NULL;
-    }
-  fseek(fp,0,SEEK_END);
-  long int size = ftell(fp);//get the size of the file
-  fseek(fp,0,SEEK_SET);//get back to beginning
-  char * buffer;
-  buffer = malloc(sizeof(char)*(size+1));
-  fread(buffer,sizeof(char),size,fp);//read all the file
+     {   
+       printf("File error\n"); 
+       return NULL; 
+     } 
+  char stars[3]; 
+  char name[200];
+  char address[200];
   
-  char * stars;
-  char * name;
-  char * address;
-  char * s1 = "\t";
-  char * s2 = "\n";
-  BusinessNode * root;
-  BusinessNode * node;
-  stars = strtok(buffer,s1);
-  name = strtok(buffer,s1);
-  address = strtok(buffer,s2);
-  //create root;
-  root = create_node(stars,name,address);
-  //keep creating node until no "\t" is found
-  stars = strtok(buffer,s1);
-  while (stars != NULL)
+  BusinessNode * root; 
+  BusinessNode * node; 
+  
+  fscanf(fp,"%[^\t]\t%[^\t]\t%[^\n]\n",stars,name,address);
+  //printf("%s\t%s\t%s\n",stars,name,address);
+  //printf("%d\n",strlen(name));
+  root = create_node(strdup(stars),strdup(name),strdup(address));
+  //print_node(root);
+  //node = create_node(strdup(stars),strdup(name),strdup(address));
+  
+  while(!feof(fp))
     {
-      name = strtok(buffer,s1);
-      address = strtok(buffer,s2);
-      node = create_node(buffer,name,address);
+      fscanf(fp,"%[^\t]\t%[^\t]\t%[^\n]\n",stars,name,address);
+      node = create_node(strdup(stars),strdup(name),strdup(address));
       root = tree_insert(node,root);
-      stars = strtok(buffer,s1);
+      //destroy_tree(node);
     }
-  free(buffer);
   fclose(fp);
+  //destroy_tree(node);
   return root;
 }
 
@@ -83,33 +82,17 @@ BusinessNode * load_tree_from_file(char * filename)
 BusinessNode * tree_search_name(char * name, BusinessNode * root)
 {
   //printf("name: %s\n",root->name);
-  BusinessNode * node = NULL;
   if (root == NULL)
     return NULL;
-  else
+  int compar = strcmp(name, root->name);
+  if (compar == 0)
     {
-      int compar = strcmp(root->name, name);
-      if (compar == 0)
-	{
-	  //printf("Got it: %s\n",root->name);
-	  return root;
-	}
-      node = tree_search_name(name,root->right);
-      if (node != NULL)
-	{
-	  return node;
-	}
-      //printf("nothing on the right\n");
-      
-      node = tree_search_name(name,root->left);
-      if (node != NULL)
-	{
-	  return node;
-	}
-      //printf("nothing on the left\n");
-    } 
-  //printf("Nope nothing\n");
-  return NULL;
+      //printf("Got it: %s\n",root->name);
+      return root;
+    }
+  if (compar < 0)
+    return tree_search_name(name,root->left);
+  return tree_search_name(name,root->right);
 }
 
 
@@ -150,8 +133,8 @@ void destroy_tree(BusinessNode * root)
   }
   destroy_tree(root->left);
   destroy_tree(root->right);
-  free(root->name);
   free(root->stars);
+  free(root->name);
   free(root->address);
   free(root);
   return;
