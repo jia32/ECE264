@@ -1,0 +1,529 @@
+commit 940f25a4ba27429b5141172cea7239676031acf6
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 9 13:59:44 2014 -0500
+
+    Finally done debugging...
+
+commit 0d677ab38a99a6e4e4bbb2024359501dd2ce0b03
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 9 03:02:59 2014 -0500
+
+    Testing
+
+commit d48b12da5da910864370fc5cffff715c944d13e3
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 9 00:42:14 2014 -0500
+
+    Stuck on (caller use strdup)
+
+commit 915dd3f32066ce8444e93565489fc678d01e7f57
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Nov 8 13:46:38 2014 -0500
+
+    Debugging.
+
+commit 92cb3e704b088d7150a86a5e3165306cc430944f
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Nov 8 12:44:32 2014 -0500
+
+    Getting started on load tree from file.
+
+commit 03096854416ebc68ccfff46bb890f0959fd37b4a
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Thu Nov 6 17:31:16 2014 -0500
+
+    Fixed destroy. Started on Node print.
+
+commit 6f2b2853d89d0c50874ffdc17ea54fecd1d05c32
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Thu Nov 6 13:26:06 2014 -0500
+
+    Stuck on destroy. Seems root is NULL.
+
+commit 6605b30eea74968f6432f34b2be93bd8445ed787
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Thu Nov 6 12:27:42 2014 -0500
+
+    Getting started.
+
+commit a896bdaeabc8f77bc589410af827e82882a6f631
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Thu Nov 6 12:27:02 2014 -0500
+
+    Getting started.
+
+commit 76dc4d53e1e8a84f4556e8a515fbbcec084a2ae4
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 03:12:28 2014 -0500
+
+    Done.
+
+commit fedc5dd794462099a074ef901a545099922a950e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 03:12:15 2014 -0500
+
+    Done.
+
+commit 75a7bc8bbb49dc719ffaa389756c95b2cdf67e9e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 02:48:12 2014 -0500
+
+    Fixed add node to the end of merged head.
+
+commit f5dcd2351cdb371120fb29c6be3aed8be2271412
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 02:15:14 2014 -0500
+
+    Debugging...
+
+commit a071db70986ab6b5df4e9372f62e856e27c71674
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:40:22 2014 -0500
+
+    Keep track on the head of merged list.
+
+commit 49d64c76b96d04601318a546469d3223149ebfe1
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:03:04 2014 -0500
+
+    Keep track on head of the merged list
+
+commit 4540cf9cf2c87f2d2d33ee791a0b8d25deb82d3c
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:50:10 2014 -0400
+
+    Keep track on the tail of merged list.
+
+commit fe46c4e8e46bb1422596d58e449a245f15bdba9b
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:35:50 2014 -0400
+
+    Typo in compar function.
+
+commit 83c70fbe4d53dc80e252217d0fa0fc16974c86c0
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:33:25 2014 -0400
+
+    Debugging...
+
+commit a896303c92dd1a3bcab8f8e86cbb0bbe26132467
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:32:35 2014 -0400
+
+    Work on merge. Fixed NULL cases. Also fixed pointer in compar.
+
+commit 24991a6443483c37f1813727322d692c8d6198d4
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Nov 2 01:00:51 2014 -0400
+
+    Working on merge now.
+
+commit f523dbcfaeac359768ac37f15fd1272140d289db
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Nov 1 00:41:52 2014 -0400
+
+    Have some idea on sort, need debugging. Code a few about merge.
+
+commit 3a1c605bc84dad0c1acd5eb70adf4fe70c3bdb11
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Nov 1 00:22:24 2014 -0400
+
+    Working on sort. Stuck on recurse and compare function.
+
+commit 1180deee5fca7267347c759786a2483771b816e1
+Author: Simin Jia <jia32@ecegrid-thin3.ecn.purdue.edu>
+Date:   Fri Oct 31 17:33:16 2014 -0400
+
+    Upload testcases
+
+commit 6e1e15d8b9374ae700167bf0c9f2b816a71fc9a2
+Author: Simin Jia <jia32@ecegrid-thin3.ecn.purdue.edu>
+Date:   Fri Oct 31 17:31:37 2014 -0400
+
+    Construct, destroy and length done. Start on merge.
+
+commit a74538e8845ad821be27db8ca5a3a7ec39e82344
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Fri Oct 31 15:25:49 2014 -0400
+
+    Testing...
+
+commit b9c37b3314310b6a8f2f8470a3ea9e157a705d98
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Fri Oct 31 14:32:29 2014 -0400
+
+    PA08 started
+
+commit 0a42176be3b141a95003e107e53a290dc6365546
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Sun Oct 26 14:31:49 2014 -0400
+
+    Getting started.
+
+commit b18b23f919c213d13bf1e24708b36d5062334f54
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Oct 25 15:45:27 2014 -0400
+
+    git.log
+
+commit 2a5b563db1be91b5bb9d5416a21e419bffc725de
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Oct 25 15:32:38 2014 -0400
+
+    Ready to submit
+
+commit 085bbef221e34ab85038d2dafb7bc4c70410371a
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Oct 25 15:31:24 2014 -0400
+
+    Done! Run tester now.
+
+commit 01e676f5cd36310d397db102e5f1d3befe87d5df
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Oct 25 14:34:26 2014 -0400
+
+    Fixed memory error in image_load. Fixing valid header for image_load now.
+
+commit bcbd034eff2a38ce2de787b5b1102394fb9dc4bd
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sat Oct 25 14:04:16 2014 -0400
+
+    Debugging... Fixing memory error.
+
+commit ed29c91c3ee72a2d34893c251f2db4346e594f9a
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 24 21:26:24 2014 -0400
+
+    Working on comment right now.
+
+commit ac2cea8b61c6056177344e9f409e50b2691470ae
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 24 20:27:47 2014 -0400
+
+    Load image is done. Start to fix save image now.
+
+commit 08c8fb4e38881c22514f5fdfec4c46bdd153ed9d
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 24 20:15:54 2014 -0400
+
+    Modifying image load
+
+commit 31f57caa47e9cb402173c0aa47c2b38ff972ddaa
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Fri Oct 24 15:34:56 2014 -0400
+
+    Memory error detected. Trying to fix them now.
+
+commit 75739956df2b5fc67d4dc39c620fdb96dbc92064
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Fri Oct 24 15:06:12 2014 -0400
+
+    Comment out fread and fclose.
+
+commit 9c0246783a26a495c5aa864e1a0ccd3dea261470
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Fri Oct 24 14:54:05 2014 -0400
+
+    Debugging... Changing for loop to read and save im->data.
+
+commit a2c37351b4afd6b65b3c320cf9023184c885f03d
+Author: Simin Jia <jia32@ecegrid-thin4.ecn.purdue.edu>
+Date:   Fri Oct 24 14:38:34 2014 -0400
+
+    Done normalization. Debugging save and load now(memory error).
+
+commit a9924047a3703a3773f57b8dcdfa4ceecd31bb73
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 24 13:06:47 2014 -0400
+
+    Not sure what to do with intensity
+
+commit c6eaf91d669af8c9db750924b901f42fa9bf8986
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 17:24:12 2014 -0400
+
+    Not sure what is intensity. Get error/warning massages.
+
+commit 42e7097b94e4e8d12297953e539008c053829fab
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 16:15:37 2014 -0400
+
+    Done coding. Start to debug.
+
+commit ee9c910159f2e2dbbc3778bcbb69a270bc98eac4
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 15:41:42 2014 -0400
+
+    Debugged. No memory leak this time. Finally could start on normalization now.
+
+commit dc5286902b54ce893659fb7df41dfa2f12c0aa41
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 14:59:21 2014 -0400
+
+    Finish load image and save image. Done commenting this part. Start to normalize.
+
+commit dc715ca4b6f74052a5539a646bfc4c7c51276842
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 14:52:30 2014 -0400
+
+    Finish saving bmp. Start to normalize.
+
+commit cab4d772f8d2a6390c3bb045e3d47da4557d0fec
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 14:25:48 2014 -0400
+
+    First step complete. Head to normalization.
+
+commit 227e470fd2c667def304093cdc64d99e08596fff
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 13:52:09 2014 -0400
+
+    Not sure how to make sure that all bytes of header can be read.
+
+commit 98bd72a1f52f7098e2ef1182943ddd00d6b9150b
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Thu Oct 23 13:31:29 2014 -0400
+
+    Getting started
+
+commit 297b74493f4842b8ef4a4a85ab3d7dced6aecbce
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 15:24:57 2014 -0400
+
+    Done.
+
+commit 7d47cf3f4cf4415424e1f36fbcb020ef0925cdd2
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 15:22:21 2014 -0400
+
+    Done! zipping file .....
+
+commit f9f81e422a2c905e9805f5221f4ec131f944779e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 15:17:12 2014 -0400
+
+    All works with tester! Writing comments right now.
+
+commit 7c86cafc9772d03cdfdef52f53ddec04a2ebaa18
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 15:14:29 2014 -0400
+
+    Git pull some files from AQ. Testing with tester now.
+
+commit 9a6247e2d52f86ae7cbcbcdab561e433cd8f052f
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 14:50:35 2014 -0400
+
+    Working! Debug with gdb and valgrid right now. Will try tester later.
+
+commit 0ff19806bcda9133cb40bc6d558855af807bd8dc
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 14:32:29 2014 -0400
+
+    No idea when to break. Everything else works just fine.
+
+commit 5d14b63f45b2236766f4f59350c39e527561dabc
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 13:16:10 2014 -0400
+
+    Get segmentation fault at the exit. Everything else seems good.
+
+commit 70d242cbe64e5fb5890a1bd322e340139b3d7640
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 12:43:37 2014 -0400
+
+    Fixed some typo mistake. Debugging right now. Getting segmentation fault now.
+
+commit e0e08f9359302ffa0a95ee1e52fbbf54ae47de8d
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 12:24:31 2014 -0400
+
+    Some syntax error.
+
+commit 5f375a2ace5b1ac54314024ecefc1e6421e862b1
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Oct 19 12:21:45 2014 -0400
+
+    Went to office hour. Really helpful.
+
+commit 2bc8d646d8049157e07003e8243932ddf8a2d496
+Author: Simin Jia <jia32@ecegrid-thin6.ecn.purdue.edu>
+Date:   Sat Oct 18 18:13:31 2014 -0400
+
+    3rd time... Rewrite the whole function in another way... QAQ
+
+commit 5a1780c3444ecd2b12a37cdb539a91f48564a164
+Author: Simin Jia <jia32@ecegrid-thin6.ecn.purdue.edu>
+Date:   Sat Oct 18 15:59:42 2014 -0400
+
+    Debugging
+
+commit a29c1bd1f2338e11e6054e43b287b77712224de9
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 17 17:31:43 2014 -0400
+
+    TA showed me another completely different way of thing... Trying now
+
+commit b13f043272947673d440180c86d8516d5b511365
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 17 16:56:52 2014 -0400
+
+    Boucing back, record the previous location
+
+commit 350da90b8dcfb305ceb94b146a653bbab4051bd2
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 17 16:43:00 2014 -0400
+
+    Debugging...
+
+commit 8c698c5d84ad6652be0298220063176f02db692a
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 17 14:07:58 2014 -0400
+
+    Getting started
+
+commit 29c6e4083112364a554b01c621fce2f487fc74ae
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Fri Oct 10 17:17:17 2014 -0400
+
+    Almost done. Valgrind and debugging.
+
+commit 246a0b38d5426fa42146b56bfb4f00fa62c2d6a2
+Author: Simin Jia <jia32@ecegrid-thin2.ecn.purdue.edu>
+Date:   Fri Oct 10 15:09:25 2014 -0400
+
+    Only Prime left.
+
+commit b7b7e17c7fe4ebb631832cf68bd0774670af2a50
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 17:40:26 2014 -0400
+
+    Working on Prime now, oddandeven left
+
+commit 1ffc4dab4afefe9a171e950bbce6bb79554eb0bc
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 16:21:52 2014 -0400
+
+    :)
+
+commit 93b642c2ec4c88e34d99a515a314656400e98051
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Oct 7 16:13:05 2014 -0400
+
+    Getting started
+
+commit 9aad67fa376b9bdf81e54378e69feff886ce9504
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 3 15:22:12 2014 -0400
+
+    Confusing...
+
+commit 1eaba6969e86a4e98fd296b9e5d08ef12eccf3a9
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 3 15:21:33 2014 -0400
+
+    Am I on the right track?
+
+commit 09918b9aa69de535a14ec4e2630de02d274c4376
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Fri Oct 3 12:29:34 2014 -0400
+
+    trying for scanf now
+
+commit dd8b0aa70157fe7e72bd5c06d3261c298bb6de52
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 30 22:27:16 2014 -0400
+
+    -r
+
+commit 0864fdc60ed8498cad93f5068de835a946b91d55
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Tue Sep 30 22:25:04 2014 -0400
+
+    pa02.zip
+
+commit dbe51e6c36b39033ec0fdb01087c3c8bdc50170a
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 22:17:49 2014 -0400
+
+    Done
+
+commit c803f2ca6b42273762f8751bd3945cf815240a4e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 22:14:19 2014 -0400
+
+    Done... need testing
+
+commit 24f1185b80f197f5e6675604ca26e84f5dd9dddf
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 21:12:41 2014 -0400
+
+    improve on strcpy
+
+commit d85bca5ca4ce402aa748276b481d59099c6ed2fd
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 29 20:59:00 2014 -0400
+
+    answer02.h
+
+commit c00b3123db727128f799dfdb0eb66b5ad4a9d032
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 22:18:48 2014 -0400
+
+    Debug and test
+
+commit 3230494bb08b8d886c54fe8ee007fb670fb86c75
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 21:43:11 2014 -0400
+
+    Almost there!
+
+commit 338020f2339630bebfd8171f9fc79c0ca02892d9
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 21:42:03 2014 -0400
+
+    Almost there!
+
+commit 284682366aa4d8ffd369383310a8da9d54134a54
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 19:52:21 2014 -0400
+
+    struggle with the strstr
+
+commit 596b527ec5cd766057ac0452c15af8601a9c16d4
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 15:02:24 2014 -0400
+
+    No idea about strstr, stuck with math problems around the 2
+    length.
+    Try call previous function and test written functions.
+
+commit 393e502eae7baf7696f460e87f7227fc3a4a475e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 14:46:06 2014 -0400
+
+    Homework
+
+commit 4cd92f2fefebef33f3aa9b798e8975b7454c719e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 12:32:33 2014 -0400
+
+    no idea how to strchr QAQ
+
+commit 028611b1a3f03d2e777e6dfdfecb726d468f4e0e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Mon Sep 8 11:51:52 2014 -0400
+
+    update 11:52 9/8/2014
+
+commit 428876516dfc55494639b7437ccca4ab9361e53e
+Author: Simin Jia <jia32@ecegrid-thin1.ecn.purdue.edu>
+Date:   Sun Sep 7 18:11:46 2014 -0400
+
+    start homework
+
+commit 591981a9d9ed3a7bcdce0fe309cc57b7b28dc759
+Author: jia32 <jia32@purdue.edu>
+Date:   Sun Sep 7 13:45:34 2014 -0400
+
+    Initial commit
