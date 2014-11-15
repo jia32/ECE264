@@ -21,8 +21,10 @@ void destroy_business_bst(struct YelpDataBST* bst);
 void destroy_business_result(struct Business* b);
 */
 
-//--------------------------------BusLoc
-//BusLoc: Linked list indexed by id (sorted)
+//-------------------BusLoc----------------------
+//BusLoc: Linked list indexed by id
+//BusLoc is similar to the expected Locations,
+//except it does not contain reviews in it
 typedef struct BusLoc_t
 {
   int id;
@@ -36,6 +38,7 @@ BusLoc * BusLoc_insert(BusLoc*, int, const char *, const char*,
 		       const char *, const char *);
 void BusLoc_destroy(BusLoc*);
 void BusLoc_print(BusLoc*);
+void test_BusLoc();
 
 BusLoc * BusLoc_create(int id, const char * address,const char * city,
 		       const char * state, const char * zip)
@@ -83,6 +86,7 @@ void BusLoc_print(BusLoc * head)
       itr = itr->next;
     }
 }
+
 void test_BusLoc()
 {
   BusLoc * head = BusLoc_create(1,"address","city","state",
@@ -91,3 +95,101 @@ void test_BusLoc()
   BusLoc_print(head);
   printf("\n");
 }
+//----------------BusTree------------------------
+//BusTree: BST indexed by name;
+
+typedef struct BusTree_t
+{
+  char * name;
+  BusLoc * loc;
+  struct BusTree_t * left;
+  struct BusTree_t * right;
+}BusTree;
+
+BusTree * BusTree_create(const char*);
+void BusTree_destroy(BusTree *);
+BusTree * BusTree_insert(BusTree *, const char*,
+			 int, const char*, const char*,
+			 const char*, const char*);
+void BusTree_print(BusTree *);
+BusTree * BusTree_find(BusTree * ,const char *);
+void test_BusTree();
+
+BusTree * BusTree_create(const char* name)
+{
+  BusTree * root = malloc(sizeof(BusTree));
+  root->name = strdup(name);
+  root->left = NULL;
+  root->right = NULL;
+  root->loc = NULL;
+  return root;
+}
+
+void BusTree_destroy(BusTree * root)
+{
+  if (root == NULL)
+    return;
+  BusTree_destroy(root->left);
+  BusTree_destroy(root->right);
+  free(root->name);
+  BusLoc_destroy(root->loc);
+  free(root);
+}
+
+BusTree * BusTree_insert(BusTree * root, const char*name,
+			 int id,const char *address,const char*city,
+			 const char* state, const char* zip)
+{
+  if (root == NULL)
+    {
+      root = BusTree_create(name);
+      root->loc = BusLoc_create(id,address,city,state,zip);
+    }
+
+  int cmp = strcmp(name, root->name);
+  if (cmp < 0)
+    root->left = BusTree_insert(root->left,name,id,address,city,state,zip);
+  else if (cmp > 0)
+    root->right = BusTree_insert(root->right,name,id,address,city,state,zip);
+  else //different locations for same name
+    root->loc = BusLoc_insert(root->loc,id,address,city,state,zip);
+  
+  return root;
+}
+
+void BusTree_print(BusTree * root)
+{
+  if (root == NULL)
+    return;
+  printf("%p %s (%p %p)\n",root,root->name,root->left,root->right);
+  BusLoc_print(root->loc);
+  printf("\n");
+  BusTree_print(root->left);
+  BusTree_print(root->right);
+}
+
+BusTree * BusTree_find(BusTree * root, const char * name)
+{
+  if (root == NULL)
+    return NULL;
+  int compar = strcmp(name,root->name);
+  if (compar == 0)
+    return root;
+  if (compar < 0)
+    BusTree_find(root->left,name);
+  BusTree_find(root->right,name);
+  return NULL;
+}
+
+void test_BusTree()
+{
+  BusTree * root = BusTree_create("KFC");
+  root = BusTree_insert(root, "KFC",1,"address1","city1","state1","11111");
+  root = BusTree_insert(root, "ACD",2,"address1","city1","state1","22222");
+  root = BusTree_insert(root, "ACD",2,"address2","city2","state2","22223");
+  root = BusTree_insert(root, "KFC",1,"address2","city2","state2","11112");
+  BusTree_print(root);
+}
+
+
+
