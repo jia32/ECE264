@@ -4,23 +4,6 @@
 #include <libgen.h>
 #include "answer10.h"
 
-/*
-struct YelpDataBST_t{
-
-}
-
-
-
-struct YelpDataBST* create_business_bst(const char* businesses_path,
-                                        const char* reviews_path);
-
-struct Business* get_business_reviews(struct YelpDataBST* bst,
-                                      char* name, char* state, char* zip_code);
-
-void destroy_business_bst(struct YelpDataBST* bst);
-void destroy_business_result(struct Business* b);
-*/
-
 //-------------------BusLoc----------------------
 //BusLoc: Linked list indexed by id
 //BusLoc is similar to the expected Locations,
@@ -191,5 +174,51 @@ void test_BusTree()
   BusTree_print(root);
 }
 
+//------------------------explode------------------------
+char** explode(const char*, const char*, int*);
 
+char** explode(const char* str, const char *delims, int *arrLen)
+{
+  int n = 0;
+  int ind;
+  int len = strlen(str);
+  for (ind = 0; ind < len; ind++)
+    {
+      if (strchr(delims,str[ind])!= NULL)
+	n+=1;
+    }
+  char**strArr = malloc((n+1)*sizeof(char*));
+  int arrInd = 0;
+  int last = 0;
+
+  for(ind = 0; ind<len;ind++)
+    {
+      //printf("%d\n",strchr(delims,str[ind])-str[ind]+11);
+      if (strchr(delims,str[ind]) != NULL)
+	{
+	  strArr[arrInd] = malloc(sizeof(char)*(ind-last));
+	  //printf("%d\n",ind-last);
+	  memcpy(strArr[arrInd],str+last,ind-last);
+	  //printf("%s\n",strArr[arrInd]);
+	  last = ind+1;
+	  arrInd++;
+	}
+    }
+  strArr[n] = malloc(sizeof(char)*(len-last));
+  memcpy(strArr[n],str+last,len-last-1);
+  *arrLen = n+1;
+  return strArr;
+}
+void test_explode();
+void test_explode()
+{
+  int len;
+  char** a = explode("id\tMcDonld\tWest Lafayett\tIN\t47906\n","\t",&len);
+  printf("length = %d\n",len);
+  int ind;
+  for(ind = 0; ind<len;ind++)
+    {
+      printf("strArr[%d] is %s\n",ind,a[ind]);
+    }
+}
 
