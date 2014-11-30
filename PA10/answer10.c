@@ -11,33 +11,32 @@
 typedef struct BusLoc_t
 {
   int id;
-  char *address, *city, * state, * zip;//owned
+  int address, city, state, zip;//these are all offsets
   struct BusLoc_t * next;
 }BusLoc;
 
-BusLoc * BusLoc_create(int,const char *,const char*, 
-		       const char*,const char*);
-BusLoc * BusLoc_insert(BusLoc*, int, const char *, const char*,
-		       const char *, const char *);
+BusLoc * BusLoc_create(int,int,int,int,int);
+BusLoc * BusLoc_insert(BusLoc*, int,int, int,
+		       int, int);
 void BusLoc_destroy(BusLoc*);
 void BusLoc_print(BusLoc*);
-void test_BusLoc();
+//void test_BusLoc();
 
-BusLoc * BusLoc_create(int id, const char * address,const char * city,
-		       const char * state, const char * zip)
+BusLoc * BusLoc_create(int id,int address,int city,
+		       int state, int zip)
 {
   BusLoc * head = malloc(sizeof(BusLoc));
   head->id = id;
-  head->address = strdup(address);
-  head->city = strdup(city);
-  head->state = strdup(state);
-  head->zip = strdup(zip);
+  head->address =address;
+  head->city = city;
+  head->state = state;
+  head->zip = zip;
   head->next = NULL;
   return head;
 }
 
-BusLoc * BusLoc_insert(BusLoc * head, int id, const char * address,
-		       const  char * city,const  char * state,const  char * zip)
+BusLoc * BusLoc_insert(BusLoc * head, int id,int address,
+		       int city,int state,int zip)
 {
   BusLoc * newhead = BusLoc_create(id,address,city,state,zip);
   newhead->next = head;
@@ -50,10 +49,6 @@ void BusLoc_destroy(BusLoc * head)
   while (itr!= NULL)
     {
       BusLoc * next = itr->next;
-      free(head->zip);
-      free(head->state);
-      free(head->city);
-      free(head->address);
       free(head);
       itr = next;
     }
@@ -64,20 +59,20 @@ void BusLoc_print(BusLoc * head)
   BusLoc * itr = head;
   while (itr != NULL)
     {
-      printf("===>%p %d %s %s %s %s %p",itr,itr->id,itr->address,
+      printf("===>%p %d %d %d %d %d %p",itr,itr->id,itr->address,
 	     itr->city,itr->state,itr->zip,itr->next);
       itr = itr->next;
     }
 }
-
-void test_BusLoc()
+/*void test_BusLoc()
 {
   BusLoc * head = BusLoc_create(1,"address","city","state",
 				"47906");
   head = BusLoc_insert(head,2,"address2","city2","state2","44444");
   BusLoc_print(head);
   printf("\n");
-}
+}*/
+
 //----------------BusTree------------------------
 //BusTree: BST indexed by name;
 
@@ -96,9 +91,9 @@ BusTree * BusTree_insert(BusTree *, const char*,
 			 const char*, const char*);
 void BusTree_print(BusTree *);
 BusTree * BusTree_find(BusTree * ,const char *);
-void test_BusTree();
+//void test_BusTree();
 
-BusTree * BusTree_create(const char* name)
+BusTree *BusTree_create(const char* name)
 {
   BusTree * root = malloc(sizeof(BusTree));
   root->name = strdup(name);
@@ -120,8 +115,8 @@ void BusTree_destroy(BusTree * root)
 }
 
 BusTree * BusTree_insert(BusTree * root, const char*name,
-			 int id,const char *address,const char*city,
-			 const char* state, const char* zip)
+			 int id,int address,int city, int state, int zip)
+
 {
   if (root == NULL)
     {
@@ -163,8 +158,7 @@ BusTree * BusTree_find(BusTree * root, const char * name)
   BusTree_find(root->right,name);
   return NULL;
 }
-
-void test_BusTree()
+/*void test_BusTree()
 {
   BusTree * root = BusTree_create("KFC");
   root = BusTree_insert(root, "KFC",1,"address1","city1","state1","11111");
@@ -172,7 +166,7 @@ void test_BusTree()
   root = BusTree_insert(root, "ACD",2,"address2","city2","state2","22223");
   root = BusTree_insert(root, "KFC",1,"address2","city2","state2","11112");
   BusTree_print(root);
-}
+}*/
 
 //------------------------explode------------------------
 char** explode(const char*, const char*, int*);
