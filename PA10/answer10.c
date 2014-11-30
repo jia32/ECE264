@@ -3,7 +3,6 @@
 #include <string.h>
 #include <libgen.h>
 #include "answer10.h"
-
 //-------------------BusLoc----------------------
 //BusLoc: Linked list indexed by id
 //BusLoc is similar to the expected Locations,
@@ -86,9 +85,8 @@ typedef struct BusTree_t
 
 BusTree * BusTree_create(const char*);
 void BusTree_destroy(BusTree *);
-BusTree * BusTree_insert(BusTree *, const char*,
-			 int, const char*, const char*,
-			 const char*, const char*);
+BusTree *BusTree_insert(BusTree *, const char*,
+			 int, int, int, int, int);
 void BusTree_print(BusTree *);
 BusTree * BusTree_find(BusTree * ,const char *);
 //void test_BusTree();
@@ -158,6 +156,7 @@ BusTree * BusTree_find(BusTree * root, const char * name)
   BusTree_find(root->right,name);
   return NULL;
 }
+
 /*void test_BusTree()
 {
   BusTree * root = BusTree_create("KFC");
@@ -170,6 +169,7 @@ BusTree * BusTree_find(BusTree * root, const char * name)
 
 //------------------------explode------------------------
 char** explode(const char*, const char*, int*);
+void test_explode();
 
 char** explode(const char* str, const char *delims, int *arrLen)
 {
@@ -203,16 +203,62 @@ char** explode(const char* str, const char *delims, int *arrLen)
   *arrLen = n+1;
   return strArr;
 }
-void test_explode();
-void test_explode()
+
+void test_explode(const char* filename)
 {
   int len;
-  char** a = explode("id\tMcDonld\tWest Lafayett\tIN\t47906\n","\t",&len);
-  printf("length = %d\n",len);
-  int ind;
-  for(ind = 0; ind<len;ind++)
+  FILE *fp = NULL;
+  fp = fopen(filename,"rb");
+  if (fp == NULL)
+    printf("%s",fp);
+  while(!fp)
     {
-      printf("strArr[%d] is %s\n",ind,a[ind]);
+      printf("getting in the loop");
+      char* buffer;
+      fread(buffer,sizeof(char),200,fp);
+      char** a = explode(buffer,"\t",&len);
+      //if (len ==8)
+	printf("length is %d\n",len);
+      int ind;
+      for(ind = 0; ind<len;ind++)
+	{
+	  printf("strArr[%d] is %s\n",ind,a[ind]);
+	}
     }
 }
+
+//------------------------create YelpDataBST---------------------
+/*
+struct YelpDataBST_t
+{
+  char * name;
+  BusLoc *loc;
+  struct Yelp
+}
+struct YelpDataBST* create_business_bst(const char* businesses_path,
+                                        const char* reviews_path)
+{
+  const char filename = business_path;
+  long file_offset = 0;
+  int lineno = 0;
+  int last_busid = -1;
+  int num_busids = 0;
+  BusTree * root;
+  while(!fp)
+    {
+      int arrlen;
+      char *strArr = explode(fp,"\t",&arrlen);
+      if (arrlen == 7)
+	{
+	  int bus_id = atoi(strArr[0]);
+	  if (busid != lastbusid)
+	    {
+	      numbusid++;
+	      lastbusid = busid;
+	    }
+	  BusTree_insert(root,strArr[1],)
+
+	}
+    }
+    }*/
 
