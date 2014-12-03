@@ -74,6 +74,7 @@ void BusLoc_print(BusLoc * head)
 
 //----------------BusTree------------------------
 //BusTree: BST indexed by name;
+//->YelpDataBST
 
 typedef struct BusTree_t
 {
@@ -204,61 +205,124 @@ char** explode(const char* str, const char *delims, int *arrLen)
   return strArr;
 }
 
-void test_explode(const char* filename)
+void test_explode()
 {
   int len;
-  FILE *fp = NULL;
-  fp = fopen(filename,"rb");
-  if (fp == NULL)
-    printf("%s",fp);
-  while(!fp)
+  char** a = explode("Ruby's Diner\t3111 W Chandler Blvd Ste 2146\tChandler\tAZ\t85226\t3111 W Chandler Blvd Ste 2146, Chandler, AZ 85226\n","\t",&len);
+  printf("length is %d\n",len);
+  int ind;
+  for(ind = 0; ind<len;ind++)
     {
-      printf("getting in the loop");
-      char* buffer;
-      fread(buffer,sizeof(char),200,fp);
-      char** a = explode(buffer,"\t",&len);
-      //if (len ==8)
-	printf("length is %d\n",len);
-      int ind;
-      for(ind = 0; ind<len;ind++)
-	{
-	  printf("strArr[%d] is %s\n",ind,a[ind]);
-	}
+      printf("strArr[%d] is %s\n",ind,a[ind]);
+      free(a[ind]);
     }
+  free(a);
+}
+
+//------------------------Get offsets---------------------------
+int * get_offsets(char**,int);
+int * get_offsets(char** strArr, int offset)
+{
+  int * offsets = malloc(sizeof(int)*4);
+  offsets[0] = strlen(strArr[2]) + offset;
+  offsets[1] = strlen(strArr[3]) + strlen(strArr[2]) + offset;
+  offsets[2] = strlen(strArr[4]) + strlen(strArr[3]) + strlen(strArr[2]) + offset;
+  offsets[3] = strlen(strArr[5]) + strlen(strArr[4]) + strlen(strArr[3]) + strlen(strArr[2]) + offset;
+  return offsets;
 }
 
 //------------------------create YelpDataBST---------------------
-/*
-struct YelpDataBST_t
+
+typedef struct YelpDataBST_t
 {
   char * name;
   BusLoc *loc;
-  struct Yelp
-}
+  struct YelpDataBST_t *left;
+  struct YelpDATABST_t *right;
+}YelpDataBST;
+
+typedef struct Review_t
+{
+  int bus_id;
+  long offset;
+}Review;
+
 struct YelpDataBST* create_business_bst(const char* businesses_path,
                                         const char* reviews_path)
 {
   const char filename = business_path;
-  long file_offset = 0;
+  int len;
   int lineno = 0;
-  int last_busid = -1;
-  int num_busids = 0;
-  BusTree * root;
-  while(!fp)
+  int last_id = -1;
+  int num_id = 0;
+  YelpDataBST * root = NULL;
+  FILE *fp;
+  
+  fp = fopen(filename,"r");
+  if(fp == NULL)
+    {
+      printf("File error\n");
+      return NULL;
+    }
+
+  //basic idea here
+  //read one line at a time till it reaches to the end
+  //use explode to read address
+  //when the id matches, insert the address offsets
+
+  //how to get offsets: get current location (before read a line)
+  //get the length of each part
+  
+  while (getline(&buffer,&len,fp)>0)
+    //(not reaching the end of the file)
     {
       int arrlen;
-      char *strArr = explode(fp,"\t",&arrlen);
-      if (arrlen == 7)
+      //buffer = fscanf("%s\n",fp);//read next line of file
+      char ** strArr = explode(buffer,"\t",&arrlen);//explode that line
+      
+      if (arrlen == 7)//make sure there are all 8 elements for address
 	{
-	  int bus_id = atoi(strArr[0]);
-	  if (busid != lastbusid)
+	  int bus_id = atoi(strArr[0]);//insert id first
+	  int * offsets = get_offsets(strArr,offset,offsets);
+	  if (bus_id != last_id)//count number of id
 	    {
-	      numbusid++;
-	      lastbusid = busid;
+	      num_id++;
+	      last_id = bus_id;
 	    }
-	  BusTree_insert(root,strArr[1],)
-
+	//insert node to bustree	
+	  root = BusTree_insert(root, strArr[1],
+				bus_id,offsets[0],offsets[1],offsets[2],offsets[3]);
+	  file offset = ftell(fp);
+	  destroystringarray(streArr,arrlen);
+	  free(offsets);
 	}
     }
-    }*/
+  fseek(fp,0,SEEK_SET);
+  free(buffer);
+  fclose(fp);
+  //---------working on review now------------                                               
+  Review * review = malloc(sizeof(Review)*num_id);
+  filename = reviews_path;
+  
+  fp = fopen(filename,"r");
 
+  if(fp == NULL)
+    {
+      printf("File error.");
+      return NULL;
+    }
+  
+
+  
+}
+
+void StrArr_destory(char **,int);
+void StrArr_destory(char ** strArr, int len)
+{
+  int ind;
+  for (ind = 0, ind < len, ind++)
+    {
+      free(strArr[ind]);
+    }
+  free(strArr);
+}
